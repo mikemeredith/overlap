@@ -23,6 +23,7 @@ a vector of densities as for d1; ignored if d1 is a matrix
 The coefficient of overlapping \eqn{\Delta} for two probability density functions \emph{f(x)} and \emph{g(x)} is given by:
 \figure{Delta.jpg}{Formula for Delta}
 If the two curves in the plot below represent activity patterns of two species, the coefficient of overlapping is the area under the lower of the two curves, shaded grey in the figure:
+
 \figure{overlap.jpg}{Plot of 2 curves, overlap shaded}
 
 }

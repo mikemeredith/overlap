@@ -1,0 +1,9 @@
+CHANGES IN VERSION 0.011
+
+* added vignette.
+
+* densityPlot modified: plot now extends beyond 00:00-24:00, with additional area shaded; argument plot=TRUE removed.
+
+* added overlapPlot.
+
+

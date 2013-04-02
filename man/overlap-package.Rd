@@ -1,5 +1,6 @@
 \name{overlap-package}
 \alias{overlap-package}
+\alias{overlap}
 \docType{package}
 \title{
 Functions to estimate overlap of diurnal activity patterns of animals
@@ -11,8 +12,8 @@ The times recorded on camera trap photos provide information on the period durin
 \tabular{ll}{
 Package: \tab overlap\cr
 Type: \tab Package\cr
-Version: \tab 0.02\cr
-Date: \tab 2013-03-31\cr
+Version: \tab 0.011\cr
+Date: \tab 2013-04-02\cr
 License: \tab GPL >=3\cr
 }
 
@@ -34,7 +35,7 @@ Ridout & Linkie (2009) Estimating overlap of daily activity patterns from camera
 \note{
 The functions in this package were originally optimised for a simulation study. Hence, speed is important and checking of input is minimal. It is the user's responsibility to make sure that input is valid.
 
-In particular, note that all times are measured in \bold{radians}. If your original data use 0-24 hours or 0-1 days, convert to radians: see the example in \code{\link{kerinci}}. If you need fitted densities in other units, use the matrix returned by \code{\link{densityPlot}}.
+In particular, note that all times are measured in \bold{radians}. If your original data use 0-24 hours or 0-1 days, convert to radians: see the example in \code{\link{kerinci}}. If you need fitted densities in other units, use the matrix returned by \code{\link{overlapPlot}}.
 }
 
 \keyword{ package }

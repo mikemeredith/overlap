@@ -8,7 +8,7 @@ Plot fitted kernel densities
 Fits a kernel density function to a data set and plots it.
 }
 \usage{
-densityPlot(A, xscale = 24, plot = TRUE, add = FALSE, rug = FALSE, n.grid = 128, kmax = 3, c = 1, ...)
+densityPlot(A, xscale = 24, add = FALSE, rug = FALSE, n.grid = 128, kmax = 3, c = 1, ...)
 }
 
 \arguments{
@@ -18,14 +18,11 @@ a vector of times of observations in \emph{radians}, ie. scaled to [\eqn{0, 2\pi
   \item{xscale}{
 The scale for the x axis: 24 (the default) produces a curve with 0 to 24 hours. NA gives a scale in radians, labelled with \eqn{pi}.
 }
-  \item{plot}{
-If TRUE, a plot will be drawn
-}
   \item{add}{
-If TRUE, the curve will be added to the existing plot. Ignored if plot = FALSE.
+If TRUE, the curve will be added to the existing plot. 
 }
   \item{rug}{
-If TRUE, the original observations will be displayed as a rug at the bottom of the plot. Ignored if plot = FALSE.
+If TRUE, the original observations will be displayed as a rug at the bottom of the plot.
 }
   \item{n.grid}{
 Number of points at which to estimate the density for plotting; 100 is usually adequate to give a smooth-looking curve.
@@ -61,8 +58,9 @@ Mike Meredith
 data(simulatedData)
 
 # Do basic plots with defaults:
-densityPlot(pigObs, rug=TRUE)
+densityPlot(pigObs, rug=TRUE, main="Simulated data")
 densityPlot(tigerObs, add=TRUE, rug=TRUE, col='blue')
+legend('topleft', c("Tiger", "Pig"), lty=1, col=c('black', 'blue'), bg='white')
 
 # Using object returned:
 densityPlot(pigObs, xscale=1, rug=TRUE, lwd=3)
@@ -72,9 +70,6 @@ lines(pigDens, lwd=3)
 
 # Plotting time in radians:
 densityPlot(pigObs, xscale=NA, rug=TRUE)
-densityPlot(tigerObs, xscale=NA, plot=FALSE, add=TRUE, rug=TRUE, col='red')
-# plot = FALSE means nothing plotted, even if other arguments are TRUE.
-
 densityPlot(tigerObs, xscale=NA, add=TRUE, rug=TRUE, col='red')
 
 }
