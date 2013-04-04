@@ -1,3 +1,11 @@
+CHANGES IN VERSION 0.012
+
+* references in documentation to "parametric" bootstrap corrected to "smoothed" bootstrap.
+
+* argument 'c' changed to 'adjust' (= 1/c) in all functions.
+
+* nonparResample and parResample combined into a single function, 'resample'.
+
 CHANGES IN VERSION 0.011
 
 * added vignette.

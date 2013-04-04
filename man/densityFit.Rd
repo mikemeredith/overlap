@@ -19,7 +19,7 @@ a vector of times of observations in \emph{radians}, ie. scaled to [\eqn{0, 2\pi
 a vector of times in \emph{radians} for which the density is required. This could be a vector of equidistant values in [\eqn{0, 2\pi}], eg. \code{seq(0, 2*pi, length=128)}, or it could be any set of times for which a density is needed.
 }
   \item{bw}{
-bandwidth, smaller values result in smoother curves.
+bandwidth, the concentration parameter for the von Mises kernel: smaller values result in smoother curves.
 }
 }
 \value{

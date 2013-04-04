@@ -8,7 +8,7 @@ Plot overlapping kernel densities
 Fits kernel density functions to two data sets and plots them, shading the area corresponding to the coefficient of overlap.
 }
 \usage{
-overlapPlot(A, B, xscale = 24, linetype = c(1, 2), linecol = c("black", "blue"), olapcol = "lightgrey", n.grid = 128, kmax = 3, c = 1, ...)
+overlapPlot(A, B, xscale = 24, linetype = c(1, 2), linecol = c("black", "blue"), olapcol = "lightgrey", n.grid = 128, kmax = 3, adjust = 1, ...)
 }
 
 \arguments{
@@ -33,7 +33,7 @@ Number of points at which to estimate the density for plotting; 100 is usually a
   \item{kmax}{
 maximum value of k for optimal bandwidth estimation.
 }
-  \item{c}{
+  \item{adjust}{
 bandwidth adjustment (scalar).
 }
   \item{\dots}{

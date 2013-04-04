@@ -8,7 +8,7 @@ Plot fitted kernel densities
 Fits a kernel density function to a data set and plots it.
 }
 \usage{
-densityPlot(A, xscale = 24, add = FALSE, rug = FALSE, n.grid = 128, kmax = 3, c = 1, ...)
+densityPlot(A, xscale = 24, add = FALSE, rug = FALSE, n.grid = 128, kmax = 3, adjust = 1, ...)
 }
 
 \arguments{
@@ -30,7 +30,7 @@ Number of points at which to estimate the density for plotting; 100 is usually a
   \item{kmax}{
 maximum value of k for optimal bandwidth estimation.
 }
-  \item{c}{
+  \item{adjust}{
 bandwidth adjustment (scalar).
 }
   \item{\dots}{

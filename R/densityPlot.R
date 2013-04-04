@@ -1,8 +1,13 @@
+# Plots a kernel density for circular data
+
+# A: a sample of times of observations in radians
+# adjust: smoothing parameter (adjust = 1/c in old code)
+
 densityPlot <-
 function(A, xscale=24, add=FALSE, rug=FALSE,
-    n.grid=128, kmax = 3, c = 1, ...)  {
+    n.grid=128, kmax = 3, adjust = 1, ...)  {
 
-  bw <- getBandWidth(A, kmax=kmax) * c
+  bw <- getBandWidth(A, kmax=kmax) / adjust
   if(is.na(bw))
     stop("Bandwidth estimation failed.")
   # xx <- seq(0, 2*pi, length=n.grid)

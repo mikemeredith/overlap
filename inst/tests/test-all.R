@@ -56,18 +56,18 @@ test_that("overlapEst gives correct answer", {
   expect_that(round(overlapEst(tigerObs, pigObs), 6),
     is_equivalent_to(c(0.290862, 0.269201, 0.227500)))
   expect_that(
-    round(overlapEst(tigerObs, pigObs, c=c(NA, 1, NA)), 6), 
+    round(overlapEst(tigerObs, pigObs, adjust=c(NA, 1, NA)), 6), 
     is_equivalent_to(c(NA_real_, 0.269201, NA_real_)))
 })
 
 context("Bootstrap functions")
-test_that("parResample gives correct answer", {
+test_that("resample smooth=TRUE gives correct answer", {
   data(simulatedData)
   set.seed(123)
-  tigSim <- parResample(tigerObs, 5)
+  tigSim <- resample(tigerObs, 5, TRUE)
   expect_that(round(colMeans(tigSim), 6),
     equals(c(3.231229, 3.279921, 3.711014, 3.379395, 3.080605)))
-  pigSim <- parResample(pigObs, 5)
+  pigSim <- resample(pigObs, 5, TRUE)
   expect_that(round(colMeans(pigSim), 6),
     equals(c(3.267318, 3.305281, 3.434542, 3.303898, 3.296674)))
   boots <- bootEst(tigSim, pigSim)
@@ -75,13 +75,13 @@ test_that("parResample gives correct answer", {
     is_equivalent_to(c(0.365660, 0.348909, 0.328000)))
 })
 
-test_that("nonparResample gives correct answer", {
+test_that("resample smooth=FALSE gives correct answer", {
   data(simulatedData)
   set.seed(123)
-  tigSim <- nonparResample(tigerObs, 5)
+  tigSim <- resample(tigerObs, 5, FALSE)
   expect_that(round(colMeans(tigSim), 6),
     equals(c(3.277974, 3.033689, 3.332466, 3.141917, 3.645971)))
-  pigSim <- nonparResample(pigObs, 5)
+  pigSim <- resample(pigObs, 5, FALSE)
   expect_that(round(colMeans(pigSim), 6),
     equals(c(3.361474, 3.397498, 3.276355, 3.395407, 3.331279)))
   boots <- bootEst(tigSim, pigSim)

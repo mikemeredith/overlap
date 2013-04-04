@@ -49,7 +49,7 @@ overlapEst(tigerObs, pigObs)
 #     Dhat1     Dhat4     Dhat5 
 # 0.2908618 0.2692011 0.2275000  
 
-overlapEst(tigerObs, pigObs, c=c(NA, 1, NA))
+overlapEst(tigerObs, pigObs, adjust=c(NA, 1, NA))
 #    Dhat1     Dhat4     Dhat5 
 #       NA 0.2692011        NA 
 

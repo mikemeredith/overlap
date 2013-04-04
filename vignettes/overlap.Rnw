@@ -81,14 +81,14 @@ Figure~\ref{fig:singleDensityCurve} shows the activity pattern from 21:00 to 03:
 
 The actual data are shown at the foot of Figure~\ref{fig:singleDensityCurve} as a `rug'.
 
-Density estimation involves smoothing the information in the data, and the degree of smoothing is controlled by the argument \code{c} to the \code{densityPlot} function. Increasing \emph{c} above the default value of 1 gives a more `spiky' curve, reducing it gives a flatter curve, as shown in Figure~\ref{fig:smoothing}. The choice of \emph{c} affects the estimate of overlap, as we discuss below.
+Density estimation involves smoothing the information in the data, and the degree of smoothing is controlled by the argument \code{adjust} to the \code{densityPlot} function. Increasing \code{adjust} above the default value of 1 gives a flatter curve, reducing it gives a more `spiky' curve, as shown in Figure~\ref{fig:smoothing}. The choice of \code{adjust} affects the estimate of overlap, as we discuss below.
 
 <<smoothing, fig=TRUE, width=6, height=6, include=FALSE, echo=FALSE>>=
 par(mfrow=2:1)
-densityPlot(tig2, rug=TRUE, c=5)
-text(2, 0.09, "c = 5")
-densityPlot(tig2, rug=TRUE, c=0.5)
-text(2, 0.065, "c = 0.5")
+densityPlot(tig2, rug=TRUE, adjust=2)
+text(2, 0.07, "adjust = 2")
+densityPlot(tig2, rug=TRUE, adjust=0.2)
+text(2, 0.1, "adjust = 0.2")
 @
 \begin{figure}[h]
   \centering
@@ -105,15 +105,6 @@ Various measures of overlap have been put forward: see \citet{RidoutLinkie2009} 
 
 \subsection{Coefficient of overlapping}
 \label{subsec:coefficient}
-
-
-% \begin{figure}[h]
-  % \centering
-  % \includegraphics{overlapDiagram.jpg}
-  % \caption{\it The coefficient of overlapping of two density curves equals the area below both curves, shaded grey in this diagram.}
-  % \label{fig:overlapDefn}
-% \end{figure}
-
 
 
 As shown in Figure~\ref{fig:tigerMacaque2}, the coefficient of overlapping, $\Delta$, is the area lying under \emph{both} of the density curves. (Remember that the area under a density curve is, by definition, 1.) Mathematically, if the two density curves are $f(x)$ and $g(x)$, this is:
@@ -146,7 +137,7 @@ For $\hat{\Delta}_4$ and $\hat{\Delta}_5$, we compare the densities at the obser
 \end{equation}
 where $I(.)$ is 1 if the condition in the parenthesis is true, 0 otherwise.
 
-The terms $\hat{f}(.)$ and $\hat{g}(.)$ refer to the fitted kernel density functions, and as such they are affected by the choice of the smoothing constant, $c$. On the basis of simulations, \citet{RidoutLinkie2009} recommend using $c=1.25$ to estimate $\hat{\Delta}_1$, $c=1.0$ for $\hat{\Delta}_4$, and $c=0.25$ for $\hat{\Delta}_5$. These are the default values used in \texttt{overlap} functions.
+The terms $\hat{f}(.)$ and $\hat{g}(.)$ refer to the fitted kernel density functions, and as such they are affected by the choice of the smoothing constant, \texttt{adjust}. On the basis of simulations, \citet{RidoutLinkie2009} recommend using \texttt{adjust~=~0.8} to estimate $\hat{\Delta}_1$, \texttt{adjust~=~1} for $\hat{\Delta}_4$, and \texttt{adjust~=~4} for $\hat{\Delta}_5$. (Note that \texttt{adjust} in the \texttt{overlap} functions corresponds to $1/c$ in \citet{RidoutLinkie2009}). These are the default values used in \texttt{overlap} functions.
 
 \subsection{Choice of estimator}
 \label{subsec:whichDhat}
@@ -189,31 +180,31 @@ To estimate confidence intervals we need to know the sampling distribution which
 \subsection{The bootstrap}
 \label{subsec:bootstrap}
 
-In nonparametric bootstrapping we treat the existing sample as representative of the population and generate a large number of new samples by randomly resampling observations with replacement from the original sample. For the case of estimating activity patterns, this may not work very well: suppose our original sample for a nocturnal species has observations between 21:00 and 03:00; resampling will never yield an observation outside that range, while a fresh sample from nature may do so.
+In normal bootstrapping we treat the existing sample as representative of the population and generate a large number of new samples by randomly resampling observations with replacement from the original sample. For the case of estimating activity patterns, this may not work very well: suppose our original sample for a nocturnal species has observations between 21:00 and 03:00; resampling will never yield an observation outside that range, while a fresh sample from nature may do so.
 
-For parametric bootstrapping we begin with a probability distribution and then draw random simulated observations from this distribution. For overlap, our starting distribution is the kernel density fitted to the data (so perhaps we should describe this as ``semi-parametric"). Faced with the original sample between 21:00 and 03:00, most simulated observations would fall in the same range, but a few will fall outside.
+An alternative is a smoothed bootstrap. We begin by fitting a kernel density to the original data then draw random simulated observations from this distribution. Faced with the original sample between 21:00 and 03:00, most simulated observations would fall in the same range, but a few will fall outside.
 
- In the \texttt{overlap} package, we generate bootstrap samples with either \texttt{parResample} or \texttt{nonparResample}. For this example, we will generate just 1000 parametric bootstrap samples for tigers and macaques in Zone 2; for a real analysis 10,000 bootstrap samples would be better:
+ In the \texttt{overlap} package, we generate bootstrap samples with \texttt{resample}, which has a \texttt{smooth} argument; if \texttt{smooth = TRUE} (the default), smoothed bootstrap samples are generated. For this example, we will generate just 1000 smoothed bootstrap samples for tigers and macaques in Zone 2; for a real analysis 10,000 bootstrap samples would be better:
 
 <<bootstrap1>>==
-tig2boot <- parResample(tig2, 1000)
+tig2boot <- resample(tig2, 1000)
 dim(tig2boot)
-mac2boot <- parResample(mac2, 1000)
+mac2boot <- resample(mac2, 1000)
 dim(mac2boot)
 @
 
 This produces matrices with a column for each bootstrap sample. The bootstrap sample size is the same as the original sample size.
 
-Now we pass these two matrices to \texttt{bootEst} to generate estimates of overlap from each pair of samples. We are only concerned with $\hat{\Delta}_4$, so we will suppress estimation of the others by setting \texttt{c = c(NA, 1, NA)}; this reduces the time needed.
+Now we pass these two matrices to \texttt{bootEst} to generate estimates of overlap from each pair of samples. We are only concerned with $\hat{\Delta}_4$, so we will suppress estimation of the others by setting \texttt{adjust = c(NA, 1, NA)}; this reduces the time needed.
 
 <<bootstrap2>>==
-tigmac2 <- bootEst(tig2boot, mac2boot, c = c(NA, 1, NA))  # takes a few seconds
+tigmac2 <- bootEst(tig2boot, mac2boot, adjust = c(NA, 1, NA))  # takes a few seconds
 dim(tigmac2)
 BSmean <- colMeans(tigmac2)
 BSmean
 @
 
-Note that the bootstrap mean, $\overline{BS}$, differs from $\hat{\Delta}$: \Sexpr{round(BSmean[2], 2)} versus \Sexpr{round(tigmac2est[2], 2)}. The difference, $\hat{\Delta} - \overline{BS}$ is the \emph{bootstrap bias}, and is a complication for confidence interval estimation.
+Note that the bootstrap mean, $\overline{BS}$, differs from $\hat{\Delta}$: \Sexpr{round(BSmean[2], 2)} versus \Sexpr{round(tigmac2est[2], 2)}. The difference, $\hat{\Delta} - \overline{BS}$ is the \emph{bootstrap bias}, and we need to take this into account when calculating the confidence interval.
 
 If the bootstrap bias were a good estimate of the original sampling bias, a better estimator of $\Delta$ would be $\tilde{\Delta} = 2\hat{\Delta} - \overline{BS}$. Our simulations show that $\tilde{\Delta}$ results in higher RMSE than the original $\hat{\Delta}$, so we do not recommend applying this correction.
 
@@ -226,7 +217,7 @@ The \texttt{perc} confidence interval is centred on the bootstrap mean, $\overli
 
 An alternative approach is to use the standard deviation of the bootstrap results, $(s_{BS})$, as an estimate of the spread of the sampling distribution, and then calculate the confidence interval as $\hat{\Delta} \pm z_{{\alpha}/2} s_{BS}$. Using $z_{0.025} = 1.96$ gives the usual 95\% confidence interval. This is \texttt{norm0} in the \texttt{bootCI} output.
 
-The difference between the values of the \texttt{basic0} and \texttt{norm0} is usually negligible.
+The difference between the values of the \texttt{basic0} and \texttt{norm0} is usually small.
 
 For the tiger-macaque data from Zone 2 we have the following estimates of a 95\% confidence interval:
 
@@ -250,11 +241,11 @@ bootCIlogit(tigmac2est[2], tmp)
 
 If a series of X\% confidence intervals are calculated from independent samples from a population, we would expect X\% of them to include the true value. When running simulations we know the true value and can check the actual proportion of confidence intervals which contain the true value: this is the \emph{coverage} of the estimator. Ideally the coverage should equal the nominal confidence interval, ie. 95\% coverage for a 95\% confidence interval.
 
-We ran a large number of simulations with different true distributions and sample sizes (see \citet{RidoutLinkie2009} for details). For each scenario, we ran both parametric and nonparametric bootstraps, extracted all nine 95\% confidence intervals, and checked the coverage for each.
+We ran a large number of simulations with different true distributions and sample sizes (see \citet{RidoutLinkie2009} for details). For each scenario, we ran both smoothed and unsmoothed bootstraps, extracted all nine 95\% confidence intervals, and checked the coverage for each.
 
-Each estimator gave a range of coverages. We looked for a method which gave median coverage closest to the nominal 95\% and all or most values above 90\%. This was satisfied by the \texttt{boot0} estimator with parametric bootstraps.
+Each estimator gave a range of coverages. We looked for a method which gave median coverage closest to the nominal 95\% and all or most values above 90\%. This was satisfied by the \texttt{boot0} estimator with smoothed bootstraps.
 
-With small samples (smaller sample <~75) and $\Delta > 0.8$, coverage fell below 90\%, but none of the other options fared better.
+With small samples (smaller sample <~75) and $\Delta >~0.8$, coverage sometimes fell below 90\%, but none of the other options fared better.
 
 
 \section{Summary of recommendations}
@@ -262,7 +253,7 @@ With small samples (smaller sample <~75) and $\Delta > 0.8$, coverage fell below
 
 \begin{itemize}
   \item Use the $\hat{\Delta}_4$ estimator (\texttt{Dhat4}) if the smaller sample has more than 75 observations. Otherwise, use the $\hat{\Delta}_1$ estimator (\texttt{Dhat1}).
-  \item Use a parametric bootstrap and do at least 1000 resamples, preferably 10,000.
+  \item Use a smoothed bootstrap and do at least 1000 resamples, preferably 10,000.
   \item Use the \texttt{basic0} output from \texttt{bootCI} as your confidence interval; be aware that this confidence interval will be too narrow if you have a small sample and $\Delta$ is close to 1.
 \end{itemize}
 	
@@ -282,7 +273,7 @@ For more on the issues surrounding changes in sunrise and sunset and ways of dea
 \subsection{What ``activity" is observed?}
 \label{sec:activity}
 
-Camera traps set along animal trails -- as they often are -- record instances of animals moving along trails. The resulting ``activity pattern" refers to walking on trails, and overlap indicates the extent to which two species are walking on trails at the same period of the day. A browsing herbivore or the carnivore stalking it are probably both ``inactive" by this definition.
+Camera traps set along animal trails -- as they often are -- record instances of animals moving along trails. The resulting ``activity pattern" refers to walking on trails, and overlap indicates the extent to which two species are walking on trails at the same period of the day. A browsing herbivore and the carnivore stalking it are probably both ``inactive" by this definition.
 
 In view of this, conclusions about species interactions need to be drawn with care. In a study in Lao PDR, \citet{Kamler+2012} found that dhole and pig were active during the day and deer at night. This might suggest that dhole feed on pig rather than deer. But examination of dhole faeces showed that dhole consumed mainly deer and very little pig.
 

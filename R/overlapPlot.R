@@ -1,9 +1,9 @@
 overlapPlot <-
 function(A, B, xscale=24, linetype=c(1, 2), linecol=c('black', 'blue'),
-    olapcol='lightgrey', n.grid=128, kmax = 3, c = 1, ...)  {
+    olapcol='lightgrey', n.grid=128, kmax = 3, adjust = 1, ...)  {
   # does a nice plot of two density curves with overlap shaded
-  bwA <- getBandWidth(A, kmax=kmax) * c
-  bwB <- getBandWidth(B, kmax=kmax) * c
+  bwA <- getBandWidth(A, kmax=kmax) / adjust
+  bwB <- getBandWidth(B, kmax=kmax) / adjust
   if(is.na(bwA) || is.na(bwB))
     stop("Bandwidth estimation failed.")
   xsc <- if(is.na(xscale)) 1 else xscale / (2*pi)

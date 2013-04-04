@@ -1,3 +1,13 @@
+# Calculate confidence intervals based on a set of bootstrap estimates.
+# In bootCIlogit, the corrections are perfomed on the logistic scale.
+
+# t0 is point estimate of parameter of interest
+# bt is a vector of bootstrap estimates
+# conf is required confidence interval
+# extreme.ok: should extreme order statistics be used as endpoints? If NA,
+#   continue with warning, if FALSE, return NAs.
+# Returns: matrix with estimators in rows, lower/upper limits in columns.
+
 bootCI <-
 function(t0, bt, conf=0.95, extreme.ok=NA)  {
   out <- matrix(NA, 5, 2)

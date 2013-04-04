@@ -46,17 +46,17 @@ spsB <- timeRad[kerinci$Zone == 3 & kerinci$Sps == 'tapir']
 length(spsA)
 length(spsB)
 # For samples of about 50, Dhat1 gives the best estimates, together with
-# confidence intervals from a parametric bootstrap with norm0 or basic0 confidence interval.
+# confidence intervals from a smoothed bootstrap with norm0 or basic0 confidence interval.
 
 # Calculate estimates of overlap:
 ( Dhats <- overlapEst(spsA, spsB) )
 
-# Do parametric bootstrap:
+# Do smoothed bootstrap:
 # Generate 999 data sets:
-bsA <- parResample(spsA, 999)
-bsB <- parResample(spsB, 999)
+bsA <- resample(spsA, 999)
+bsB <- resample(spsB, 999)
 # Analyse with bootEst, estimating only Dhat1:
-bsOut <- bootEst(bsA, bsB, c=c(1.25, NA, NA))  # Takes a while
+bsOut <- bootEst(bsA, bsB, adjust=c(0.8, NA, NA))  # Takes a while
 colMeans(bsOut)
 # Convert column 1 to a vector:
 bs <- as.vector(bsOut[, 1])

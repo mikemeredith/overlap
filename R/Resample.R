@@ -1,20 +1,24 @@
 
 # Nonparametric resampling
-nonparResample <-
-function(x, nb)  {
-  n <- length(x)
-  matrix(sample(x, n * nb, replace=TRUE), n, nb)
-}
 
-# Parametric resampling
-parResample <-
-function(x, nb, kmax=3, c=1, n.grid=512)  {
+# x: vector of observation times in radians
+# nb: number of bootstrap samples required
+# smooth: if TRUE, smoothed resamples are returned
+# kmax, adjust, n.grid: arguments passed to densityFit
+
+resample <-
+function(x, nb, smooth=TRUE, kmax=3, adjust=1, n.grid=512)  {
   n <- length(x)
-  bw0 <- getBandWidth(x, kmax=kmax)
-  if(is.na(bw0))  # if Uniroot Error
-    return(NA)
-  dA <- densityFit(x, seq(0, 2*pi, length=n.grid), bw0*c)
-  matrix(rejectSampleRad(n * nb, dA), n, nb)
+  if(smooth) {
+    bw0 <- getBandWidth(x, kmax=kmax)
+    if(is.na(bw0))  # if Uniroot Error
+      return(NA)
+    dA <- densityFit(x, seq(0, 2*pi, length=n.grid), bw0 / adjust)
+    res <- matrix(rejectSampleRad(n * nb, dA), n, nb)
+  } else {
+    res <- matrix(sample(x, n * nb, replace=TRUE), n, nb)
+  }
+  return(res)
 }
 
 

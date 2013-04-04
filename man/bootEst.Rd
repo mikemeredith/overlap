@@ -1,19 +1,18 @@
 \name{bootstrap functions}
 \alias{bootEst}
-\alias{parResample}
-\alias{nonparResample}
+\alias{resample}
 
 \title{
 Functions to generate bootstrap estimates of overlap
 }
 \description{
-The strategy implemented involves three steps: 1. Create a matrix of bootstrap samples for each data set, using \code{paramResample} or \code{nonparResample}. 2. Use \code{bootEst} to calculate estimates for each bootstrap sample and create a matrix of bootstrap estimates. 3. Process the bootstrap estimates, eg. to produce confidence intervals with \code{\link{bootCI}}.
+The strategy implemented involves three steps: 1. Create a matrix of bootstrap samples for each data set, using \code{resample}. 2. Use \code{bootEst} to calculate estimates for each bootstrap sample and create a matrix of bootstrap estimates. 3. Process the bootstrap estimates, eg. to produce confidence intervals with \code{\link{bootCI}}.
 }
 
 \usage{
-parResample(x, nb, kmax = 3, c = 1, n.grid = 512)
-nonparResample(x, nb)
-bootEst(Amat, Bmat, kmax = 3, c = NULL, n.grid = 128)
+resample(x, nb, smooth = TRUE, kmax = 3, adjust = 1, n.grid = 512)
+
+bootEst(Amat, Bmat, kmax = 3, adjust=c(0.8, 1, 4), n.grid = 128)
 }
 
 \arguments{
@@ -23,13 +22,16 @@ a numeric vector of time-of-capture data in \emph{radians}, ie. on [0, \eqn{2\pi
   \item{nb}{
 the number of bootstrap samples required
 }
+  \item{smooth}{
+if TRUE, smoothed bootstrap samples are produced.
+}
   \item{Amat, Bmat}{
-matrices of resampled data for each species produced by \code{nonparResample} or \code{paramResample}; see Value below.
+matrices of resampled data for each species produced by \code{resample}; see Value below.
 }
   \item{kmax}{
 maximum value of k for optimal bandwidth estimation.
 }
-  \item{c}{
+  \item{adjust}{
 bandwidth adjustment: see Details.
 }
   \item{n.grid}{
@@ -40,15 +42,15 @@ number of points at which to estimate density for comparison between species; sm
 \details{
 bandwidth adjustment:
 \itemize{
-\item for \code{paramResample}, a single value.
-\item for \code{bootEst}, either a single value used for all 3 overlap estimates, or a vector of 3 different values; a NA value in c means that the corresponding estimate will not be calculated. If NULL, the values indicated by Ridout & Linkie (2009), \code{c(1.25, 1, 0.25)}, are used.
+\item for \code{resample}, a single value.
+\item for \code{bootEst}, either a single value used for all 3 overlap estimates, or a vector of 3 different values; a NA value in \code{adjust} means that the corresponding estimate will not be calculated. 
 }
 }
 
 \value{
-The functions \code{paramResample} and \code{nonparResample} return numeric matrices with each column corresponding to a bootstrap sample. Times are in \emph{radians}. Function \code{paramResample} may return a matrix of NAs if bandwidth estimation fails.
+The function \code{resample} returns a numeric matrix with each column corresponding to a bootstrap sample. Times are in \emph{radians}. It may return a matrix of NAs if \code{smooth = TRUE} and bandwidth estimation fails.
 
-Function \code{bootEst} returns a numeric matrix with three columns, one for each estimator of overlap. If argument c contains NAs, the corresponding columns in the output will be NAs. If bandwidth estimation fails for a bootstrap sample, the corresponding row will contain NAs.
+Function \code{bootEst} returns a numeric matrix with three columns, one for each estimator of overlap. If argument \code{adjust} contains NAs, the corresponding columns in the output will be NAs. If bandwidth estimation fails for a bootstrap sample, the corresponding row will contain NAs.
 }
 
 \references{
@@ -63,10 +65,10 @@ Mike Meredith, including code by Martin Ridout.
 }
 \examples{
 data(simulatedData)
-tigSim <- nonparResample(tigerObs, 99)
+tigSim <- resample(tigerObs, 99)
 dim(tigSim)
 
-pigSim <- nonparResample(pigObs, 99)
+pigSim <- resample(pigObs, 99)
 boots <- bootEst(tigSim, pigSim)
 colMeans(boots)
 

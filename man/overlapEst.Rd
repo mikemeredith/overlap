@@ -8,7 +8,7 @@ Estimates of coefficient of overlapping
 Calculates up to three estimates of activity pattern overlap based on times of observations for two species.
 }
 \usage{
-overlapEst(A, B, kmax = 3, c = NULL, n.grid = 128)
+overlapEst(A, B, kmax = 3, adjust=c(0.8, 1, 4), n.grid = 128)
 }
 \arguments{
   \item{A}{
@@ -20,8 +20,8 @@ a vector of times of observations of species B in radians.
   \item{kmax}{
 maximum value of k for optimal bandwidth estimation.
 }
-  \item{c}{
-bandwidth adjustment; either a single value used for all 3 overlap estimates, or a vector of 3 different values; a NA value in c means that the corresponding estimate will not be calculated. If NULL, the values indicated by Ridout & Linkie (2009), \code{c(1.25, 1, 0.25)}, are used.
+  \item{adjust}{
+bandwidth adjustment; either a single value used for all 3 overlap estimates, or a vector of 3 different values; a NA value in \code{adjust} means that the corresponding estimate will not be calculated. This corresponds to \emph{1/c} in Ridout & Linkie 2009.
 }
   \item{n.grid}{
 number of points at which to estimate density for comparison between species; smaller values give lower precision but run faster in simulations and bootstraps.
@@ -71,7 +71,7 @@ overlapEst(tigerObs, pigObs)
 #     Dhat1     Dhat4     Dhat5 
 # 0.2908618 0.2692011 0.2275000 
 
-overlapEst(tigerObs, pigObs, c=c(NA, 1, NA))
+overlapEst(tigerObs, pigObs, adjust=c(NA, 1, NA))
 #    Dhat1     Dhat4     Dhat5 
 #       NA 0.2692011        NA 
 
