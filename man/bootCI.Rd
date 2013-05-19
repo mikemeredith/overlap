@@ -9,21 +9,18 @@ Confidence interval calculation from bootstrap samples.
 \code{bootCI} calculates five different confidence intervals from bootstrap samples: see details: \code{bootCIlogit} calculates corrections on the logit scale and back-transforms.
 }
 \usage{
-bootCI(t0, bt, conf = 0.95, extreme.ok = NA)
-bootCIlogit(t0, bt, conf = 0.95, extreme.ok = NA)
+bootCI(t0, bt, conf = 0.95)
+bootCIlogit(t0, bt, conf = 0.95)
 }
 \arguments{
   \item{t0}{
 the statistic estimated from the original sample
 }
   \item{bt}{
-a vector of bootstrap statistics
+a vector of bootstrap statistics.
 }
   \item{conf}{
 a (single!) confidence interval to estimate.
-}
-  \item{extreme.ok}{
-logical, should extreme order statistics be used as endpoints? If NA (default), continue with warning; if FALSE, return NAs.
 }
 }
 \details{
@@ -52,7 +49,7 @@ So: "perc" ignores BS bias completely; "basic" and "norm" assume original sampli
 The "logit" versions perform the corrections on the logit scale and then back transform. This would be appropriate for probabilities or proportions.
 }
 \value{
-A named matrix with 2 columns for lower and upper limits and a row for each type of estimate.
+A named matrix with 2 columns for lower and upper limits and a row for each type of estimate. Values will be NA if the bootstrap sample is too small (after removing NAs): 40 is the minimum for a 95\% confidence interval, 200 for 99\%.
 }
 \references{
 %% ~put references to the literature/web site here ~

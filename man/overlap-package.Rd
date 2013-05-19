@@ -3,7 +3,7 @@
 \alias{overlap}
 \docType{package}
 \title{
-Functions to estimate overlap of diurnal activity patterns of animals
+Functions to estimate overlap of temporal activity patterns of animals
 }
 \description{
 The times recorded on camera trap photos provide information on the period during the day that a species is most active. Species active at the same periods may interact as predator and prey, or as competitors. The functions in this package allow the overlap to be quantified, and provide means of estimating confidence intervals with bootstraps.

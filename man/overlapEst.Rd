@@ -48,7 +48,7 @@ where \emph{n, m} are the sample sizes and \emph{I} is the indicator function (1
 }
 
 \value{
-Returns a named vector of three estimates of overlap. Individual elements may be NA if the argument \code{c} contained NAs. All will be NA if optimal bandwidth estimation failed.
+Returns a named vector of three estimates of overlap. Individual elements may be NA if the argument \code{adjust} contained NAs. All will be NA if optimal bandwidth estimation failed.
 }
 \references{
 Ridout & Linkie (2009) Estimating overlap of daily activity patterns from camera trap data. \emph{Journal of Agricultural, Biological, and Environmental Statistics} 14:322-337

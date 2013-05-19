@@ -1,3 +1,13 @@
+CHANGES IN VERSION 0.014
+
+* Corrections to vignette and documentation file.
+
+CHANGES IN VERSION 0.013
+
+* changes to bootCI: now uses own quantileInter function instead of
+ boot:::norm.inter; argument extreme.ok removed, returns NA if not 
+ enough bootstrap samples.
+
 CHANGES IN VERSION 0.012
 
 * references in documentation to "parametric" bootstrap corrected to "smoothed" bootstrap.

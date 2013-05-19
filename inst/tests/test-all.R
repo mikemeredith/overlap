@@ -56,6 +56,9 @@ test_that("overlapEst gives correct answer", {
   expect_that(round(overlapEst(tigerObs, pigObs), 6),
     is_equivalent_to(c(0.290862, 0.269201, 0.227500)))
   expect_that(
+    round(overlapEst(tigerObs, pigObs, adjust=c(1.2, 1.5, 1)), 6), 
+    is_equivalent_to(c(0.315068, 0.288488, 0.237500)))
+  expect_that(
     round(overlapEst(tigerObs, pigObs, adjust=c(NA, 1, NA)), 6), 
     is_equivalent_to(c(NA_real_, 0.269201, NA_real_)))
 })
@@ -159,19 +162,19 @@ test_that("bootCIlogit gives correct results", {
 } )
 
 
-test_that("norm.inter gives correct results for extreme.ok", {
+test_that("quantileInter gives same results as norm.inter", {
   set.seed(123)
   foo <- runif(200)
-  expect_that(round(as.vector(norm.inter(foo, c(0.025, 0.975))), 6),
-    equals(c(5.030000, 195.970000,   0.045564,   0.979369)))
+  expect_that(round(quantileInter(foo), 6),
+    equals(c(0.045564, 0.979369)))
+  expect_that(round(quantileInter(foo[-1]), 6),
+    equals(c(0.045556, 0.979822)))
+  expect_that(round(quantileInter(foo, conf=0.8), 6),
+    equals(c(0.141946, 0.894843)))
 
   diddyfoo <- runif(20)
-  expect_that(round(as.vector(norm.inter(diddyfoo, c(0.025, 0.975), extreme.ok = TRUE)), 6),
-    equals(c(0.520000, 20.470000,  0.047664,  0.962359)))
-  expect_that(all(is.na(norm.inter(diddyfoo, c(0.45, 0.975), extreme.ok = FALSE))),
-    is_true())
-  expect_that(norm.inter(diddyfoo, c(0.45, 0.975), extreme.ok = NA),
-    gives_warning("extreme order statistics used as endpoints"))
+  expect_that(quantileInter(diddyfoo),
+    equals(rep(NA_real_, 2)))
 } )
 
 

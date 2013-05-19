@@ -1,8 +1,9 @@
 
 useDynLib(overlap, densRad)
 
-export(bootEst, densityPlot, densityFit, getBandWidth, resample,
-  overlapTrue, overlapEst, overlapPlot, norm.inter, bootCI, bootCIlogit)
+export(densityPlot, densityFit, getBandWidth, 
+  overlapTrue, overlapEst, overlapPlot, 
+  resample, bootEst, bootCI, bootCIlogit)
 
-# Not exported: rejectSampleRad, 
+# Not exported: rejectSampleRad, quantileInter
 
