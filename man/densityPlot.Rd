@@ -8,7 +8,8 @@ Plot fitted kernel densities
 Fits a kernel density function to a data set and plots it.
 }
 \usage{
-densityPlot(A, xscale = 24, add = FALSE, rug = FALSE, n.grid = 128, kmax = 3, adjust = 1, ...)
+densityPlot(A, xscale = 24, add = FALSE, rug = FALSE, n.grid = 128,
+   kmax = 3, adjust = 1, ...)
 }
 
 \arguments{
@@ -37,22 +38,15 @@ bandwidth adjustment (scalar).
 Further arguments passed to the plotting functions, such as \code{col}, \code{lty} and \code{lwd}.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
 Returns invisibly a two-column matrix with x and y coordinates which can be used for further plotting; see examples.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
+
 \author{
 Mike Meredith
 }
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 # Get example data:
 data(simulatedData)

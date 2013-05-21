@@ -30,12 +30,7 @@ The figures below show the true densities (solid line), the simulated data (rug 
 \figure{tigNpig.jpg}{plots of tiger and pig densities}
 
 }
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
-\references{
-%%  ~~ possibly secondary sources and usages ~~
-}
+
 \examples{
 require(graphics)
 data(simulatedData)

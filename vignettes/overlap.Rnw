@@ -175,12 +175,12 @@ Both of these samples have more than 75 observations, so the $\hat{\Delta}_4$ es
 \section{Confidence intervals}
 \label{sec:CIs}
 
-To estimate confidence intervals we need to know the sampling distribution which our coefficient of overlapping is drawn from, ie. the distribution we would get if we had a very large number of independent samples from nature. The best way to investigate this is to use a bootstrap.
+To estimate confidence intervals we need to know the sampling distribution which our coefficient of overlapping is drawn from, ie, the distribution we would get if we had a very large number of independent samples from nature. The best way to investigate this is to use a bootstrap.
 
 \subsection{The bootstrap}
 \label{subsec:bootstrap}
 
-In normal bootstrapping we treat the existing sample as representative of the population and generate a large number of new samples by randomly resampling observations with replacement from the original sample. For the case of estimating activity patterns, this may not work very well: suppose our original sample for a nocturnal species has observations ranging from 20:58 to 03:14; resampling will never yield an observation outside that range, while a fresh sample from nature may do so.
+The usual bootstrap method treats the existing sample as representative of the population, and generates a large number of new samples by randomly resampling observations with replacement from the original sample. For the case of estimating activity patterns, this may not work very well: suppose our original sample for a nocturnal species has observations ranging from 20:58 to 03:14; resampling will never yield an observation outside that range, while a fresh sample from nature may do so.
 
 An alternative is a smoothed bootstrap. We begin by fitting a kernel density to the original data then draw random simulated observations from this distribution. Faced with original values between 20:58 and 03:14, most simulated observations would fall in the same range, but a few will fall outside.
 
@@ -204,7 +204,7 @@ BSmean <- colMeans(tigmac2)
 BSmean
 @
 
-Note that the bootstrap mean, $\overline{BS}$, differs from $\hat{\Delta}$: \Sexpr{round(BSmean[2], 2)} versus \Sexpr{round(tigmac2est[2], 2)}. The difference, $\hat{\Delta} - \overline{BS}$, is the \emph{bootstrap bias}, and we need to take this into account when calculating the confidence interval.
+Note that the bootstrap mean, $\overline{BS}$, differs from $\hat{\Delta}$: \Sexpr{round(BSmean[2], 2)} versus \Sexpr{round(tigmac2est[2], 2)}. The difference, $\overline{BS} - \hat{\Delta}$, is the \emph{bootstrap bias}, and we need to take this into account when calculating the confidence interval.
 
 If the bootstrap bias were a good estimate of the original sampling bias, a better estimator of $\Delta$ would be $\tilde{\Delta} = 2\hat{\Delta} - \overline{BS}$. Our simulations show that $\tilde{\Delta}$ results in higher RMSE than the original $\hat{\Delta}$, so we do not recommend applying this correction.
 
@@ -213,7 +213,7 @@ If the bootstrap bias were a good estimate of the original sampling bias, a bett
 
 One way to estimate the confidence interval is simply to look at the appropriate percentiles of the set of bootstrap estimates (interpolating between values if necessary): for a 95\% confidence interval these would be the 2.5\% and 97.5\% percentiles. This is \texttt{perc} in the output from \texttt{overlap}'s \texttt{bootCI} function.
 
-We noted at the end of Section~\ref{subsec:bootstrap} that, on average, the bootstrap values differ from the estimate: this is the bootstrap bias. The raw percentiles produced by \texttt{perc} need to be adjusted to account for this bias. The appropriate confidence interval is \texttt{perc} $+ (\hat{\Delta} - \overline{BS})$; this is \texttt{basic0} in the \texttt{bootCI} output.
+We noted at the end of Section~\ref{subsec:bootstrap} that, on average, the bootstrap values differ from the estimate: this is the bootstrap bias. The raw percentiles produced by \texttt{perc} need to be adjusted to account for this bias. The appropriate confidence interval is \texttt{perc} $- (\overline{BS} - \hat{\Delta})$; this is \texttt{basic0} in the \texttt{bootCI} output.
 
 An alternative approach is to use the standard deviation of the bootstrap results, $(s_{\scriptscriptstyle BS})$, as an estimate of the spread of the sampling distribution, and then calculate the confidence interval as $\hat{\Delta} \pm z_{{\alpha}/2} s_{\scriptscriptstyle BS}$. Using $z_{0.025} = 1.96$ gives the usual 95\% confidence interval. This is \texttt{norm0} in the \texttt{bootCI} output. This procedure assumes that the sampling distribution is normal. If that's the case, \texttt{norm0} will be close to \texttt{basic0}, but if the distribution is skewed -- as it will be if $\hat{\Delta}$ is close to 0 or 1 -- \texttt{basic0} is the better estimator.
 
@@ -238,7 +238,7 @@ In this example, the CIs are well away from 0 or 1, so the difference is small (
 \subsection{Choice of CI method}
 \label{subsec:whichCI}
 
-If a series of X\% confidence intervals are calculated from independent samples from a population, we would expect X\% of them to include the true value. When running simulations we know the true value and can check the actual proportion of confidence intervals which contain the true value: this is the \emph{coverage} of the estimator. Ideally the coverage should equal the nominal confidence interval, ie. 95\% coverage for a 95\% confidence interval.
+If a series of X\% confidence intervals are calculated from independent samples from a population, we would expect X\% of them to include the true value. When running simulations we know the true value and can check the actual proportion of confidence intervals which contain the true value: this is the \emph{coverage} of the estimator. Ideally the coverage should equal the nominal confidence interval, ie, 95\% coverage for a 95\% confidence interval.
 
 We ran a large number of simulations with different true distributions and sample sizes (see \citet{RidoutLinkie2009} for details). For each scenario, we ran both smoothed and unsmoothed bootstraps, extracted all nine 95\% confidence intervals, and checked the coverage for each.
 

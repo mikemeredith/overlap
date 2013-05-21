@@ -30,30 +30,27 @@ Let t = true value of the statistic,\cr
     
 If bootstrap sampling introduces no bias, E[mean(bt)] = t0, otherwise BS bias = mean(bt) - t0.
 
-Assuming that the original sampling causes the same bias as the bootstrap sampling, we write: mean(bt) - t0 = t0 - t, and hence calculate a bias-corrected estimate, t~ = 2 x t0 - mean(bt).
+Assuming that the original sampling causes the same bias as the bootstrap sampling, we write: mean(bt) - t0 = t0 - t, and hence calculate a bias-corrected estimate, t1 = 2 x t0 - mean(bt).
 
-The percentiles CI, \dQuote{perc}, gives interpolated quantiles of the bootstrap values, so it is centered on the bootstrap mean, mean(bt). 
+The percentiles CI, \dQuote{perc}, gives quantiles of the bootstrap values, interpolated if necessary. However, in general, the bootstrap estimates are biased, so \dQuote{perc} should be corrected. 
 
-\dQuote{basic} is a bias-corrected version of \dQuote{perc}, centered on t~.
+\dQuote{basic} is a bias-corrected version of \dQuote{perc}, analogous to t1: 2 x t0 - \code{perc}.
 
-\dQuote{norm} gives tail cutoffs for a normal distribution with mean = t~ and sd = sd(bt)
+\dQuote{norm} gives tail cutoffs for a normal distribution with mean = t1 and sd = sd(bt).
 
-These three are equivalent to the confidence intervals returned by \code{boot::boot.ci}.
+These three are equivalent to the confidence intervals returned by \code{boot::boot.ci}. \dQuote{basic} and \dQuote{norm} are appropriate if you are using the bias-corrected estimator, t1. If you use the uncorrected estimator, t0, you should use \dQuote{basic0} or \dQuote{norm0}:
 
-\dQuote{basic0} is a bias-corrected version of \dQuote{perc}, centered on t0.
+\dQuote{basic0} is \code{perc} - mean(bt) + t0.
 
-\dQuote{norm0} gives tail cutoffs for a normal distribution with mean = t0 and sd = sd(bt)
-
-So: "perc" ignores BS bias completely; "basic" and "norm" assume original sampling introduces a bias equal to the BS bias. Neither may be appropriate for your analysis! "basic0" and "norm0" correct for the difference between mean(bt) and t0, but make no assumptions about any sampling bias affecting t0.
+\dQuote{norm0} gives tail cutoffs as before, but with mean = t0 instead of t1.
 
 The "logit" versions perform the corrections on the logit scale and then back transform. This would be appropriate for probabilities or proportions.
 }
+
 \value{
-A named matrix with 2 columns for lower and upper limits and a row for each type of estimate. Values will be NA if the bootstrap sample is too small (after removing NAs): 40 is the minimum for a 95\% confidence interval, 200 for 99\%.
+A named matrix with 2 columns for lower and upper limits and a row for each type of estimate. Values will be NA if the bootstrap sample is too small (after removing NAs) for estimation: 40 is the minimum for a 95\% confidence interval, 200 for 99\% (though for stable estimates you need at least 999 bootstrap estimates, preferably 10,000).
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
+
 \author{
 Mike Meredith
 }

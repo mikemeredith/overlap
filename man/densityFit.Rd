@@ -5,7 +5,7 @@
 Fits von Mises kernel density to time-of-day data.
 }
 \description{
-Fits von Mises kernel density to time-of-day data.
+Fits von Mises kernel density to time-of-day data. Intended primarily for internal use: input checking is minimal.
 }
 \usage{
 densityFit(x, grid, bw)
@@ -25,9 +25,7 @@ bandwidth, the concentration parameter for the von Mises kernel: smaller values 
 \value{
 Returns a vector of densities corresponding to the times in grid.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
+
 \author{
 C code written by Mike Meredith.
 }

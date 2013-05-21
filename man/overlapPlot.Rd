@@ -8,7 +8,8 @@ Plot overlapping kernel densities
 Fits kernel density functions to two data sets and plots them, shading the area corresponding to the coefficient of overlap.
 }
 \usage{
-overlapPlot(A, B, xscale = 24, linetype = c(1, 2), linecol = c("black", "blue"), olapcol = "lightgrey", n.grid = 128, kmax = 3, adjust = 1, ...)
+overlapPlot(A, B, xscale = 24, linetype = c(1, 2), linecol = c("black", "blue"),
+   olapcol = "lightgrey", n.grid = 128, kmax = 3, adjust = 1, ...)
 }
 
 \arguments{
@@ -40,11 +41,13 @@ bandwidth adjustment (scalar).
 Further arguments passed to the plotting functions.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-Returns invisibly a two-column matrix with x and y coordinates which can be used for further plotting; see examples.
+Returns invisibly a list with elements:
+
+  \item{x}{a vector of equally-spaced times from midnight to midnight inclusive on the scale specified by \code{xscale}.}
+  \item{densA}{a vector of length \code{x} with the fitted kernel density for species A.}
+  \item{densB}{a similar vector for species B.}
 }
 \author{
 Mike Meredith
