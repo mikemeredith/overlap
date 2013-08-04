@@ -13,7 +13,6 @@ function(A, B, xscale=24, linetype=c(1, 2), linecol=c('black', 'blue'),
   densB <- densityFit(B, xxRad, bwB) / xsc
   densOL <- pmin(densA, densB)
   ylim <- c(0, max(densA, densB))
-  #toPlot <- cbind(x = xx * xsc, y = densA / xsc)
   
   plot(0, 0, type='n', #las=1, 
     ylim=ylim, xlim=range(xx), xlab="Time", ylab="Density", xaxt='n', ...)
@@ -27,7 +26,7 @@ function(A, B, xscale=24, linetype=c(1, 2), linecol=c('black', 'blue'),
   } else {
     axis(1)
   }
-  polygon(c(c(2*pi, 0), xx), c(0, 0, densOL), border=NA, col=olapcol)
+  polygon(c(2*pi*xsc, 0, xx), c(0, 0, densOL), border=NA, col=olapcol)
   lines(xx, densA, lty=linetype[1], col=linecol[1]) 
   lines(xx, densB, lty=linetype[2], col=linecol[2]) 
   return(invisible(list(x = xx, densityA = densA, densityB = densB)))

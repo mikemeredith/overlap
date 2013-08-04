@@ -1,0 +1,5 @@
+CHANGES IN VERSION v.0.2
+
+* Fixed bug in overlapPlot (reported by Jesse Lewis) and added overlapPlot to
+  examples on 'kerinchi' help page.
+

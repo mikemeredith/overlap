@@ -42,6 +42,10 @@ timeRad <- kerinci$Time * 2*pi
 spsA <- timeRad[kerinci$Zone == 3 & kerinci$Sps == 'tiger']
 spsB <- timeRad[kerinci$Zone == 3 & kerinci$Sps == 'tapir']
 
+# Plot the data:
+overlapPlot(spsA, spsB)
+legend('topleft', c("Tiger", "Tapir"), lty=c(1, 2), col=c("black", "blue"), bty='n')
+
 # Check sample sizes:
 length(spsA)
 length(spsB)
