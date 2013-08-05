@@ -8,8 +8,10 @@ Plot overlapping kernel densities
 Fits kernel density functions to two data sets and plots them, shading the area corresponding to the coefficient of overlap.
 }
 \usage{
-overlapPlot(A, B, xscale = 24, linetype = c(1, 2), linecol = c("black", "blue"),
-   olapcol = "lightgrey", n.grid = 128, kmax = 3, adjust = 1, ...)
+overlapPlot(A, B, xscale = 24,
+   linetype = c(1, 2), linecol = c("black", "blue"), linewidth = c(1, 1),
+   olapcol = "lightgrey", n.grid = 128, xlab="Time", ylab="Density", 
+   kmax = 3, adjust = 1, ...)
 }
 
 \arguments{
@@ -25,11 +27,17 @@ a vector of length 2 giving the line type for each species. Look for \code{lty} 
   \item{linecol}{
 a vector of length 2 giving the line colour for each species. See the Color Specification section in \code{\link{par}} for details.
 }
+  \item{linewidth}{
+a vector of length 2 giving the line width for each species.
+}
   \item{olapcol}{
 the colour to use for the shaded area. See the Color Specification section in \code{\link{par}} for details.
 }
   \item{n.grid}{
 Number of points at which to estimate the density for plotting; 100 is usually adequate to give a smooth-looking curve.
+}
+  \item{xlab, ylab}{
+Labels for the x and y axes.
 }
   \item{kmax}{
 maximum value of k for optimal bandwidth estimation.

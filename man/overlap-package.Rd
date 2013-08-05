@@ -12,8 +12,8 @@ The times recorded on camera trap photos provide information on the period durin
 \tabular{ll}{
 Package: \tab overlap\cr
 Type: \tab Package\cr
-Version: \tab 0.2\cr
-Date: \tab 2013-08-04\cr
+Version: \tab 0.2.0\cr
+Date: \tab 2013-08-05\cr
 License: \tab GPL >=3\cr
 }
 
