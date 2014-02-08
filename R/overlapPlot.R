@@ -1,7 +1,7 @@
 overlapPlot <-
 function(A, B, xscale=24, linetype=c(1, 2), linecol=c('black', 'blue'),
     linewidth=c(1,1), olapcol='lightgrey', n.grid=128, 
-    xlab="Time", ylab="Density", kmax = 3, adjust = 1, ...)  {
+    xlab="Time", ylab="Density", ylim, kmax = 3, adjust = 1, ...)  {
   # does a nice plot of two density curves with overlap shaded
   bwA <- getBandWidth(A, kmax=kmax) / adjust
   bwB <- getBandWidth(B, kmax=kmax) / adjust
@@ -13,7 +13,8 @@ function(A, B, xscale=24, linetype=c(1, 2), linecol=c('black', 'blue'),
   densA <- densityFit(A, xxRad, bwA) / xsc
   densB <- densityFit(B, xxRad, bwB) / xsc
   densOL <- pmin(densA, densB)
-  ylim <- c(0, max(densA, densB))
+  if (missing(ylim))
+    ylim <- c(0, max(densA, densB))
   
   plot(0, 0, type='n', #las=1, 
     ylim=ylim, xlim=range(xx), xlab=xlab, ylab=ylab, xaxt='n', ...)

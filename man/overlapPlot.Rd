@@ -10,7 +10,7 @@ Fits kernel density functions to two data sets and plots them, shading the area 
 \usage{
 overlapPlot(A, B, xscale = 24,
    linetype = c(1, 2), linecol = c("black", "blue"), linewidth = c(1, 1),
-   olapcol = "lightgrey", n.grid = 128, xlab="Time", ylab="Density", 
+   olapcol = "lightgrey", n.grid = 128, xlab="Time", ylab="Density", ylim, 
    kmax = 3, adjust = 1, ...)
 }
 
@@ -34,10 +34,13 @@ a vector of length 2 giving the line width for each species.
 the colour to use for the shaded area. See the Color Specification section in \code{\link{par}} for details.
 }
   \item{n.grid}{
-Number of points at which to estimate the density for plotting; 100 is usually adequate to give a smooth-looking curve.
+number of points at which to estimate the density for plotting; 100 is usually adequate to give a smooth-looking curve.
 }
   \item{xlab, ylab}{
-Labels for the x and y axes.
+labels for the x and y axes.
+}
+  \item{ylim}{
+optional y limits of the plot; the default goes from 0 to the height of the highest curve.
 }
   \item{kmax}{
 maximum value of k for optimal bandwidth estimation.

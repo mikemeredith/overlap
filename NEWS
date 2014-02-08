@@ -1,3 +1,7 @@
+CHANGES IN VERSION 0.2.1-dev
+
+* overlapPlot gains argument ylim (wish of Jesse Lewis)
+
 CHANGES IN VERSION 0.2.0
 
 * Fixed bug in overlapPlot (reported by Jesse Lewis) and added overlapPlot to
