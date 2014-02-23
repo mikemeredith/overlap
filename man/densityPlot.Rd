@@ -9,7 +9,7 @@ Fits a kernel density function to a data set and plots it.
 }
 \usage{
 densityPlot(A, xscale = 24, add = FALSE, rug = FALSE, n.grid = 128,
-   kmax = 3, adjust = 1, ...)
+   kmax = 3, adjust = 1, ylim, xlab="Time", ylab="Density", ...)
 }
 
 \arguments{
@@ -33,6 +33,12 @@ maximum value of k for optimal bandwidth estimation.
 }
   \item{adjust}{
 bandwidth adjustment (scalar).
+}
+  \item{xlab, ylab}{
+labels for the x and y axes.
+}
+  \item{ylim}{
+optional y limits of the plot; the default goes from 0 to the height of the curve.
 }
   \item{\dots}{
 Further arguments passed to the plotting functions, such as \code{col}, \code{lty} and \code{lwd}.
