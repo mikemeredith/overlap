@@ -1,3 +1,8 @@
+CHANGES IN VERSION 0.2.3
+
+* overlapPlot and densityPlot gain argument xcenter, which controls whether the
+  the plot is centred at noon (default) or midnight (wish of Bronwyn Fancourt).
+
 CHANGES IN VERSION 0.2.2
 
 * overlapPlot gains argument ylim (wish of Jesse Lewis)

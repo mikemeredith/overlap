@@ -8,7 +8,7 @@ Plot overlapping kernel densities
 Fits kernel density functions to two data sets and plots them, shading the area corresponding to the coefficient of overlap.
 }
 \usage{
-overlapPlot(A, B, xscale = 24,
+overlapPlot(A, B, xscale = 24, xcenter = c("noon", "midnight"),
    linetype = c(1, 2), linecol = c("black", "blue"), linewidth = c(1, 1),
    olapcol = "lightgrey", n.grid = 128, xlab="Time", ylab="Density", ylim, 
    kmax = 3, adjust = 1, ...)
@@ -20,6 +20,9 @@ vectors of times of observations for species A and species B in \emph{radians}, 
 }
   \item{xscale}{
 the scale for the x axis: 24 (the default) produces a curve with 0 to 24 hours. NA gives a scale in radians, labelled with \eqn{pi}.
+}
+  \item{xcenter}{
+the center of the plot on the x axis: 'noon' (default) or 'midnight'.
 }
   \item{linetype}{
 a vector of length 2 giving the line type for each species. Look for \code{lty} in \code{\link{par}} for ways to specify this.
