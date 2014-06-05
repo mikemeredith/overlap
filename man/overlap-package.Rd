@@ -9,15 +9,11 @@ Functions to estimate overlap of temporal activity patterns of animals
 The times recorded on camera trap photos provide information on the period during the day that a species is most active. Species active at the same periods may interact as predator and prey, or as competitors. The functions in this package allow the overlap to be quantified, and provide means of estimating confidence intervals with bootstraps.
 }
 \details{
-\tabular{ll}{
-Package: \tab overlap\cr
-Type: \tab Package\cr
-Version: \tab 0.2.0\cr
-Date: \tab 2013-08-05\cr
-License: \tab GPL >=3\cr
+The functions in this package were originally optimised for a simulation study. Hence, speed is important and checking of input is minimal. It is the user's responsibility to make sure that input is valid.
+
+In particular, note that all times are measured in \bold{radians}. If your original data use 0-24 hours or 0-1 days, convert to radians: see the example in \code{\link{kerinci}}. If you need fitted densities in other units, use the output from \code{\link{densityPlot}} or \code{\link{overlapPlot}}.
 }
 
-}
 \author{
 Mike Meredith, based on work by Martin Ridout.
 
@@ -30,12 +26,6 @@ See \code{\link{overlapTrue}} for the definition of the coefficient of overlappi
 
 \references{
 Ridout & Linkie (2009) Estimating overlap of daily activity patterns from camera trap data. \emph{Journal of Agricultural, Biological, and Environmental Statistics} 14:322-337
-}
-
-\note{
-The functions in this package were originally optimised for a simulation study. Hence, speed is important and checking of input is minimal. It is the user's responsibility to make sure that input is valid.
-
-In particular, note that all times are measured in \bold{radians}. If your original data use 0-24 hours or 0-1 days, convert to radians: see the example in \code{\link{kerinci}}. If you need fitted densities in other units, use the output from \code{\link{densityPlot}} or \code{\link{overlapPlot}}.
 }
 
 \keyword{ package }

@@ -43,7 +43,8 @@ spsA <- timeRad[kerinci$Zone == 3 & kerinci$Sps == 'tiger']
 spsB <- timeRad[kerinci$Zone == 3 & kerinci$Sps == 'tapir']
 
 # Plot the data:
-overlapPlot(spsA, spsB)
+overlapPlot(spsA, spsB)  # Tapir are mainly nocturnal
+overlapPlot(spsA, spsB, xcenter="midnight")
 legend('topleft', c("Tiger", "Tapir"), lty=c(1, 2), col=c("black", "blue"), bty='n')
 
 # Check sample sizes:

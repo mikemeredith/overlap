@@ -23,7 +23,7 @@ function(A, B, xscale=24, xcenter=c("noon", "midnight"),
     ylim <- c(0, max(densA, densB))
   
   plot(0, 0, type='n', #las=1, 
-    ylim=ylim, xlim=range(xx), xlab=xlab, ylab=ylab, xaxt='n')##########, ...)
+    ylim=ylim, xlim=range(xx), xlab=xlab, ylab=ylab, xaxt='n', ...)
   if(is.na(xscale)) {
       axis(1, at=c(-pi, -pi/2, 0, pi/2, pi, 3*pi/2, 2*pi),
         labels=c(expression(-pi), expression(-pi/2), "0",
