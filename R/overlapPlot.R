@@ -1,7 +1,8 @@
 overlapPlot <-
 function(A, B, xscale=24, xcenter=c("noon", "midnight"), 
     linetype=c(1, 2), linecol=c('black', 'blue'),
-    linewidth=c(1,1), olapcol='lightgrey', n.grid=128, 
+    linewidth=c(1,1), olapcol='lightgrey', rug=FALSE,
+    n.grid=128, 
     xlab="Time", ylab="Density", ylim, kmax = 3, adjust = 1, ...)  {
   # does a nice plot of two density curves with overlap shaded
 
@@ -39,7 +40,17 @@ function(A, B, xscale=24, xcenter=c("noon", "midnight"),
     axis(1)
   }
   polygon(c(max(xx), min(xx), xx), c(0, 0, densOL), border=NA, col=olapcol)
+  if(rug)
+    segments(xx[1], 0, xx[n.grid], 0, lwd=0.5)
   lines(xx, densA, lty=linetype[1], col=linecol[1], lwd=linewidth[1]) 
   lines(xx, densB, lty=linetype[2], col=linecol[2], lwd=linewidth[2]) 
+  if(rug) {
+    if(isMidnt) {
+      A <- ifelse(A < pi, A, A - 2*pi)
+      B <- ifelse(B < pi, B, B - 2*pi)
+    }
+    axis(1, at=A*xsc, labels=FALSE, tcl= 0.35, lwd=0, lwd.ticks=0.5, col=linecol[1])
+    axis(1, at=B*xsc, labels=FALSE, tcl=-0.35, lwd=0, lwd.ticks=0.5, pos=0, col=linecol[2])
+  }
   return(invisible(list(x = xx, densityA = densA, densityB = densB)))
 }
