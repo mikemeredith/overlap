@@ -1,3 +1,7 @@
+CHANGES IN VERSION 0.2.4
+
+* overlapPlot gains a rug argument (suggestion of Anand Roopsind)
+
 CHANGES IN VERSION 0.2.3
 
 * overlapPlot and densityPlot gain argument xcenter, which controls whether the
