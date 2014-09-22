@@ -9,8 +9,8 @@ Fits a kernel density function to a data set and plots it.
 }
 \usage{
 densityPlot(A, xscale = 24, xcenter = c("noon", "midnight"),
-   add = FALSE, rug = FALSE, n.grid = 128,
-   kmax = 3, adjust = 1, ylim, xlab="Time", ylab="Density", ...)
+   add = FALSE, rug = FALSE, strips = 'lightgrey',
+   n.grid = 128, kmax = 3, adjust = 1, ...)
 }
 
 \arguments{
@@ -29,6 +29,9 @@ If TRUE, the curve will be added to the existing plot. Use the same settings for
   \item{rug}{
 If TRUE, the original observations will be displayed as a rug at the bottom of the plot.
 }
+  \item{strips}{
+The background colour for the strips on each side of the plot; set \code{strips = NULL} to remove the strips.
+}
   \item{n.grid}{
 Number of points at which to estimate the density for plotting; 100 is usually adequate to give a smooth-looking curve.
 }
@@ -38,19 +41,13 @@ maximum value of k for optimal bandwidth estimation.
   \item{adjust}{
 bandwidth adjustment (scalar).
 }
-  \item{xlab, ylab}{
-labels for the x and y axes.
-}
-  \item{ylim}{
-optional y limits of the plot; the default goes from 0 to the height of the curve.
-}
   \item{\dots}{
-Further arguments passed to the plotting functions, such as \code{col}, \code{lty} and \code{lwd}.
+Further arguments passed to the plotting functions, such as \code{col, lty, lwd} or \code{xlab, ylab, main}.
 }
 }
 
 \value{
-Returns invisibly a two-column matrix with x and y coordinates which can be used for further plotting; see examples.
+Returns invisibly a data frame with x and y coordinates which can be used for further plotting or calculations; see examples.
 }
 
 \author{
@@ -61,10 +58,13 @@ Mike Meredith
 # Get example data:
 data(simulatedData)
 
-# Do basic plots with defaults:
-densityPlot(pigObs, rug=TRUE, main="Simulated data")
-densityPlot(tigerObs, add=TRUE, rug=TRUE, col='blue')
-legend('topleft', c("Tiger", "Pig"), lty=1, col=c('black', 'blue'), bg='white')
+# Do basic plot with defaults:
+densityPlot(pigObs)
+# Prettier plots:
+densityPlot(pigObs, strips=NULL, lwd=2)
+densityPlot(pigObs, rug=TRUE, main="Simulated data", strips='gold')
+densityPlot(tigerObs, add=TRUE, rug=TRUE, col='red')
+legend('topleft', c("Tiger", "Pig"), lty=1, col=c('black', 'red'), bg='white')
 # Add vertical dotted lines to mark sunrise (say 05:30) and sunset (18:47):
 # (times must be in hours if the x-axis is labelled in hours)
 abline(v=c(5.5, 18+47/60), lty=3)
@@ -76,10 +76,13 @@ densityPlot(pigObs, xcenter = "m")
 abline(v=c(5.5, (18+47/60) - 24), lty=3)
 
 # Using object returned:
-densityPlot(pigObs, xscale=1, rug=TRUE, lwd=3)
-# Don't like the rug with lwd = 3!
-pigDens <- densityPlot(pigObs, xscale=1, rug=TRUE)
+densityPlot(pigObs, rug=TRUE, lwd=3)
+# Don't like the rug with lwd = 3?
+pigDens <- densityPlot(pigObs, rug=TRUE)
 lines(pigDens, lwd=3)
+# What proportion of the density lies between 9:00 and 15:00 hrs?
+wanted <- pigDens$x > 9 & pigDens$x < 15
+mean(pigDens$y[wanted]) * 6  # probability mass for the 6 hr period. 
 
 # Plotting time in radians:
 densityPlot(pigObs, xscale=NA, rug=TRUE)

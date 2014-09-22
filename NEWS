@@ -1,4 +1,12 @@
+TO DO
+
 CHANGES IN VERSION 0.2.4
+
+* plotting functions make full use of the dots argument (...); formal arguments
+  ylim, xlab, ylab, etc, removed.
+
+* densityPlot gains a strips argument which controls the strips at the sides
+  of the plot for the 24-hr period.
 
 * overlapPlot gains a rug argument (suggestion of Anand Roopsind)
 

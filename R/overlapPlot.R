@@ -1,10 +1,11 @@
+# does a nice plot of two density curves with overlap shaded
+
 overlapPlot <-
-function(A, B, xscale=24, xcenter=c("noon", "midnight"), 
+function(A, B, xscale=24, xcenter=c("noon", "midnight"),
     linetype=c(1, 2), linecol=c('black', 'blue'),
     linewidth=c(1,1), olapcol='lightgrey', rug=FALSE,
-    n.grid=128, 
-    xlab="Time", ylab="Density", ylim, kmax = 3, adjust = 1, ...)  {
-  # does a nice plot of two density curves with overlap shaded
+    n.grid=128, kmax = 3, adjust = 1, ...)  {
+    # xlab="Time", ylab="Density", ylim, now passed via "..."
 
   isMidnt <- match.arg(xcenter) == "midnight"
 
@@ -20,30 +21,33 @@ function(A, B, xscale=24, xcenter=c("noon", "midnight"),
   densA <- densityFit(A, xxRad, bwA) / xsc
   densB <- densityFit(B, xxRad, bwB) / xsc
   densOL <- pmin(densA, densB)
-  if (missing(ylim))
-    ylim <- c(0, max(densA, densB))
+
+  # Deal with ... argument:
+  dots <- list(...)
+  if(length(dots) == 1 && class(dots[[1]]) == "list")
+    dots <- dots[[1]]
+  defaultArgs <- list(
+    main=paste(deparse(substitute(A)), "and", deparse(substitute(B))), 
+    xlab="Time", ylab="Density",
+    bty="o", type="l", xlim=range(xx), ylim = c(0, max(densA, densB)))
+  useArgs <- modifyList(defaultArgs, dots)
+
+  selPlot <- names(useArgs) %in%
+    c(names(as.list(args(plot.default))), names(par(no.readonly=TRUE)))
+  plotArgs <- useArgs[selPlot]
+  plotArgs$x <- 0
+  plotArgs$y <- 0
+  plotArgs$type <- "n"
+  plotArgs$xaxt <- "n"
+  do.call(plot, plotArgs, quote=TRUE)
+
+  plotTimeAxis(xscale)
   
-  plot(0, 0, type='n', #las=1, 
-    ylim=ylim, xlim=range(xx), xlab=xlab, ylab=ylab, xaxt='n', ...)
-  if(is.na(xscale)) {
-      axis(1, at=c(-pi, -pi/2, 0, pi/2, pi, 3*pi/2, 2*pi),
-        labels=c(expression(-pi), expression(-pi/2), "0",
-          expression(pi/2), expression(pi),
-          expression(3*pi/2), expression(2*pi)))
-  } else if(xscale == 24) {
-    axis(1, at=c(-12, -6, 0,6,12,18,24),
-      labels=c("12:00", "18:00", "0:00", "6:00", "12:00", "18:00", "24:00"))
-  } else if(xscale == 1) {
-    axis(1, at=c(-0.5, -0.25, 0, 0.25, 0.5, 0.75, 1),
-      labels=TRUE)
-  } else {
-    axis(1)
-  }
   polygon(c(max(xx), min(xx), xx), c(0, 0, densOL), border=NA, col=olapcol)
   if(rug)
     segments(xx[1], 0, xx[n.grid], 0, lwd=0.5)
-  lines(xx, densA, lty=linetype[1], col=linecol[1], lwd=linewidth[1]) 
-  lines(xx, densB, lty=linetype[2], col=linecol[2], lwd=linewidth[2]) 
+  lines(xx, densA, lty=linetype[1], col=linecol[1], lwd=linewidth[1])
+  lines(xx, densB, lty=linetype[2], col=linecol[2], lwd=linewidth[2])
   if(rug) {
     if(isMidnt) {
       A <- ifelse(A < pi, A, A - 2*pi)
@@ -52,5 +56,5 @@ function(A, B, xscale=24, xcenter=c("noon", "midnight"),
     axis(1, at=A*xsc, labels=FALSE, tcl= 0.35, lwd=0, lwd.ticks=0.5, col=linecol[1])
     axis(1, at=B*xsc, labels=FALSE, tcl=-0.35, lwd=0, lwd.ticks=0.5, pos=0, col=linecol[2])
   }
-  return(invisible(list(x = xx, densityA = densA, densityB = densB)))
+  return(invisible(data.frame(x = xx, densityA = densA, densityB = densB)))
 }
