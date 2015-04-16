@@ -177,7 +177,43 @@ test_that("quantileInter gives same results as norm.inter", {
     equals(rep(NA_real_, 2)))
 } )
 
+context("Output from plotting functions")
+test_that("densityPlot gives correct output", {
+  data(simulatedData)
+  foo <- densityPlot(pigObs)
+  expect_that(class(foo), equals("data.frame"))
+  expect_that(names(foo), equals(c("x", "y"))) 
+  expect_that(nrow(foo), equals(128))
+  wanted <- foo$x > 0 & foo$x < 24
+  expect_that(round(mean(foo$y[wanted]) * 24, 4), equals( 0.9961))
 
+  foo <- densityPlot(tigerObs, xscale = NA, xcenter = "m", n.grid=1024)
+  expect_that(class(foo), equals("data.frame"))
+  expect_that(names(foo), equals(c("x", "y"))) 
+  expect_that(nrow(foo), equals(1024))
+  wanted <- foo$x > -pi & foo$x < pi
+  expect_that(round(mean(foo$y[wanted]) * 2 * pi, 4), equals( 1.0004))
+})
 
+test_that("overlapPlot gives correct output", {
+  data(simulatedData)
+  foo <- overlapPlot(pigObs, tigerObs)
+  expect_that(class(foo), equals("data.frame"))
+  expect_that(names(foo), equals(c("x", "densityA", "densityB"))) 
+  expect_that(nrow(foo), equals(128))
+  wanted <- foo$x > 0 & foo$x < 24
+  expect_that(round(mean(foo$densityA[wanted]) * 24, 4), equals( 1.0079))
+  expect_that(round(mean(foo$densityB[wanted]) * 24, 4), equals( 1.0067))
+
+  foo <- overlapPlot(pigObs, tigerObs, xscale = NA, xcenter = "m", n.grid=1024)
+  expect_that(class(foo), equals("data.frame"))
+  expect_that(names(foo), equals(c("x", "densityA", "densityB"))) 
+  expect_that(nrow(foo), equals(1024))
+  wanted <- foo$x > -pi & foo$x < pi
+  expect_that(round(mean(foo$densityA[wanted]) * 2 * pi, 4), equals(0.9981))
+  expect_that(round(mean(foo$densityB[wanted]) * 2 * pi, 4), equals(1.0008))
+})
+
+graphics.off()
 
 

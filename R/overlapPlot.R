@@ -3,7 +3,7 @@
 overlapPlot <-
 function(A, B, xscale=24, xcenter=c("noon", "midnight"),
     linetype=c(1, 2), linecol=c('black', 'blue'),
-    linewidth=c(1,1), olapcol='lightgrey', rug=FALSE,
+    linewidth=c(1,1), olapcol='lightgrey', rug=FALSE, extend=NULL,
     n.grid=128, kmax = 3, adjust = 1, ...)  {
     # xlab="Time", ylab="Density", ylim, now passed via "..."
 
@@ -14,7 +14,12 @@ function(A, B, xscale=24, xcenter=c("noon", "midnight"),
   if(is.na(bwA) || is.na(bwB))
     stop("Bandwidth estimation failed.")
   xsc <- if(is.na(xscale)) 1 else xscale / (2*pi)
-  xxRad <- seq(0, 2*pi, length=n.grid)
+  # xxRad <- seq(0, 2*pi, length=n.grid)
+  if (is.null(extend)) {
+    xxRad <- seq(0, 2*pi, length=n.grid)
+  } else {
+    xxRad <- seq(-pi/4, 9*pi/4, length=n.grid)
+  }
   if(isMidnt)
     xxRad <- xxRad - pi
   xx <- xxRad * xsc
@@ -42,10 +47,21 @@ function(A, B, xscale=24, xcenter=c("noon", "midnight"),
   do.call(plot, plotArgs, quote=TRUE)
 
   plotTimeAxis(xscale)
-  
   polygon(c(max(xx), min(xx), xx), c(0, 0, densOL), border=NA, col=olapcol)
-  if(rug)
-    segments(xx[1], 0, xx[n.grid], 0, lwd=0.5)
+  if(!is.null(extend)) {
+    if(isMidnt) {
+      wrap <- c(-pi, pi) * xsc
+    } else {
+      wrap <- c(0, 2*pi) * xsc
+    }
+    edge <- par('usr')
+    rect(c(edge[1], wrap[2]), rep(edge[3], 2), c(wrap[1], edge[2]), rep(edge[4],2),
+      border=NA, col=extend)
+    box(bty=useArgs$bty)
+  }
+
+  # if(rug)
+  segments(xx[1], 0, xx[n.grid], 0, lwd=0.5)
   lines(xx, densA, lty=linetype[1], col=linecol[1], lwd=linewidth[1])
   lines(xx, densB, lty=linetype[2], col=linecol[2], lwd=linewidth[2])
   if(rug) {

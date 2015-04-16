@@ -9,7 +9,7 @@ Fits a kernel density function to a data set and plots it.
 }
 \usage{
 densityPlot(A, xscale = 24, xcenter = c("noon", "midnight"),
-   add = FALSE, rug = FALSE, strips = 'lightgrey',
+   add = FALSE, rug = FALSE, extend = 'lightgrey',
    n.grid = 128, kmax = 3, adjust = 1, ...)
 }
 
@@ -29,8 +29,8 @@ If TRUE, the curve will be added to the existing plot. Use the same settings for
   \item{rug}{
 If TRUE, the original observations will be displayed as a rug at the bottom of the plot.
 }
-  \item{strips}{
-The background colour for the strips on each side of the plot; set \code{strips = NULL} to remove the strips.
+  \item{extend}{
+If not NULL, the plot extends 3 hours before and after the main 24-hr period, and \code{extend} specifies the background colour; the plot is not extended if \code{extend = NULL}.
 }
   \item{n.grid}{
 Number of points at which to estimate the density for plotting; 100 is usually adequate to give a smooth-looking curve.
@@ -61,8 +61,8 @@ data(simulatedData)
 # Do basic plot with defaults:
 densityPlot(pigObs)
 # Prettier plots:
-densityPlot(pigObs, strips=NULL, lwd=2)
-densityPlot(pigObs, rug=TRUE, main="Simulated data", strips='gold')
+densityPlot(pigObs, extend=NULL, lwd=2)
+densityPlot(pigObs, rug=TRUE, main="Simulated data", extend='gold')
 densityPlot(tigerObs, add=TRUE, rug=TRUE, col='red')
 legend('topleft', c("Tiger", "Pig"), lty=1, col=c('black', 'red'), bg='white')
 # Add vertical dotted lines to mark sunrise (say 05:30) and sunset (18:47):
