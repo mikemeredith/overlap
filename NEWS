@@ -1,5 +1,9 @@
 TO DO
 
+CHANGES IN VERSION 0.2.5
+
+* fixed bug in plotting functions: dots argument not passed to x axis code.
+
 CHANGES IN VERSION 0.2.4
 
 * plotting functions make full use of the dots argument (...); formal arguments

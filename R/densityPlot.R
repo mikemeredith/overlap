@@ -43,7 +43,7 @@ function(A, xscale=24, xcenter=c("noon", "midnight"),
     plotArgs$xaxt <- "n"
     do.call(plot, plotArgs, quote=TRUE)
 
-    plotTimeAxis(xscale)
+    plotTimeAxis(xscale, ...)
     abline(h=0, col='grey')
     if(!is.null(extend)) {
       if(isMidnt) {

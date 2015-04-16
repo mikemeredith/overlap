@@ -46,7 +46,7 @@ function(A, B, xscale=24, xcenter=c("noon", "midnight"),
   plotArgs$xaxt <- "n"
   do.call(plot, plotArgs, quote=TRUE)
 
-  plotTimeAxis(xscale)
+  plotTimeAxis(xscale, ...)
   polygon(c(max(xx), min(xx), xx), c(0, 0, densOL), border=NA, col=olapcol)
   if(!is.null(extend)) {
     if(isMidnt) {
