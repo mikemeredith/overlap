@@ -1,5 +1,9 @@
 TO DO
 
+CHANGES IN VERSION 0.2.6
+
+* Changes to NAMESPACE to accommodate R 3.3.
+
 CHANGES IN VERSION 0.2.5
 
 * fixed bug in plotting functions: dots argument not passed to x axis code.
