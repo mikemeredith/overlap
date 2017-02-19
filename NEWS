@@ -1,5 +1,9 @@
 TO DO
 
+CHANGES IN VERSION 0.2.6.9000
+
+  * Routines in overlap C code now registered.
+
 CHANGES IN VERSION 0.2.6
 
 * Changes to NAMESPACE to accommodate R 3.3.
@@ -34,6 +38,6 @@ CHANGES IN VERSION 0.2.0
 
 * Fixed bug in overlapPlot (reported by Jesse Lewis) and added overlapPlot to
   examples on 'kerinchi' help page.
-  
+
 * overlapPlot gains arguments linewidth, xlab and ylab.
 

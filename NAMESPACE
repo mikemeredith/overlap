@@ -1,5 +1,6 @@
 
-useDynLib(overlap, densRad)
+# useDynLib(overlap, densRad)
+useDynLib(overlap, .registration = TRUE, .fixes = "C_")
 
 importFrom("graphics", "abline", "axis", "box", "lines", "par", "plot",
      "plot.default", "polygon", "rect", "segments")

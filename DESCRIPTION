@@ -1,8 +1,8 @@
 Package: overlap
 Type: Package
 Title: Estimates of Coefficient of Overlapping for Animal Activity Patterns
-Version: 0.2.6
-Date: 2016-02-07
+Version: 0.2.6.9000
+Date: 2017-02-19
 Author: Mike Meredith and Martin Ridout
 Maintainer:  Mike Meredith <mmeredith@wcs.org>
 Description: Provides functions to fit kernel density functions to
@@ -10,3 +10,5 @@ Description: Provides functions to fit kernel density functions to
  of overlapping of densities for two species; and calculate bootstrap
  estimates of confidence intervals.
 License: GPL (>=3)
+NeedsCompilation: yes
+ByteCompile: yes
