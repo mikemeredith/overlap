@@ -1,5 +1,10 @@
 TO DO
 
+
+CHANGES IN VERSION 0.2.7.9000
+
+  * Include checks for data in plotting functions.
+
 CHANGES IN VERSION 0.2.7
 
   * Routines in overlap C code now registered.

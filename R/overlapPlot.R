@@ -7,6 +7,8 @@ function(A, B, xscale=24, xcenter=c("noon", "midnight"),
     n.grid=128, kmax = 3, adjust = 1, ...)  {
     # xlab="Time", ylab="Density", ylim, now passed via "..."
 
+  checkInput(A)
+  checkInput(B)
   isMidnt <- match.arg(xcenter) == "midnight"
 
   bwA <- getBandWidth(A, kmax=kmax) / adjust

@@ -25,6 +25,6 @@ plotTimeAxis <- function(xscale, ...) {
   } else if(xscale == 1) {
     plotArgs$at <- c(-0.5, -0.25, 0, 0.25, 0.5, 0.75, 1)
     plotArgs$labels <- TRUE
-  } 
+  }
   do.call(axis, plotArgs, quote=TRUE)
 }

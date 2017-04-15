@@ -50,7 +50,7 @@ legend('topleft', c("Tiger", "Tapir"), lty=c(1, 2), col=c("black", "blue"), bty=
 # Check sample sizes:
 length(spsA)
 length(spsB)
-# For samples of about 50, Dhat1 gives the best estimates, together with
+# If the smaller sample is less than 50, Dhat1 gives the best estimates, together with
 # confidence intervals from a smoothed bootstrap with norm0 or basic0 confidence interval.
 
 # Calculate estimates of overlap:

@@ -9,6 +9,7 @@ function(A, xscale=24, xcenter=c("noon", "midnight"),
     n.grid=128, kmax = 3, adjust = 1, ...)  {
     # ylim, xlab="Time", ylab="Density" now included in defaultArgs
 
+  checkInput(A)
   isMidnt <- match.arg(xcenter) == "midnight"
   bw <- getBandWidth(A, kmax=kmax) / adjust
   if(is.na(bw))
