@@ -12,12 +12,21 @@
 
 
 bootEst <-
-function(Amat, Bmat, kmax=3, adjust=c(0.8, 1, 4), n.grid=128) {
+function(Amat, Bmat, kmax=3, adjust=c(0.8, 1, 4), n.grid=128,
+      type=c("all", "Dhat1", "Dhat4", "Dhat5")) {
   nboot <- min(ncol(Amat), ncol(Bmat))
-  bsamp <- matrix(NA, nboot, 3)
-  colnames(bsamp) <- c("Dhat1", "Dhat4", "Dhat5")
+  type <- match.arg(type)
+  if(type == "all") {
+    bsamp <- matrix(NA, nboot, 3)
+    colnames(bsamp) <- c("Dhat1", "Dhat4", "Dhat5")
+  } else {
+    bsamp <- matrix(NA, nboot, 1)
+  }
+  
   for(i in 1:nboot)
     bsamp[i, ] <- overlapEst(Amat[, i], Bmat[, i], kmax=kmax,
-                          adjust=adjust, n.grid=n.grid) 
+                          adjust=adjust, n.grid=n.grid, type=type) 
+  if(ncol(bsamp) == 1)
+    bsamp <- as.vector(bsamp)
   return(bsamp)
 }

@@ -8,7 +8,8 @@ Estimates of coefficient of overlapping
 Calculates up to three estimates of activity pattern overlap based on times of observations for two species.
 }
 \usage{
-overlapEst(A, B, kmax = 3, adjust=c(0.8, 1, 4), n.grid = 128)
+overlapEst(A, B, kmax = 3, adjust=c(0.8, 1, 4), n.grid = 128,
+    type=c("all", "Dhat1", "Dhat4", "Dhat5"))
 }
 \arguments{
   \item{A}{
@@ -21,10 +22,13 @@ a vector of times of observations of species B in radians.
 maximum value of k for optimal bandwidth estimation.
 }
   \item{adjust}{
-bandwidth adjustment; either a single value used for all 3 overlap estimates, or a vector of 3 different values; a NA value in \code{adjust} means that the corresponding estimate will not be calculated. This corresponds to \emph{1/c} in Ridout & Linkie 2009.
+bandwidth adjustment; either a single value used for all 3 overlap estimates, or a vector of 3 different values. This corresponds to \emph{1/c} in Ridout & Linkie 2009.
 }
   \item{n.grid}{
 number of points at which to estimate density for comparison between species; smaller values give lower precision but run faster in simulations and bootstraps.
+}
+  \item{type}{
+the name of the estimator to use, or "all" to produce all three estimates.
 }
 }
 \details{
@@ -48,7 +52,7 @@ where \emph{n, m} are the sample sizes and \emph{I} is the indicator function (1
 }
 
 \value{
-Returns a named vector of three estimates of overlap. Individual elements may be NA if the argument \code{adjust} contained NAs. All will be NA if optimal bandwidth estimation failed.
+If \code{type = all}, a named vector of three estimates of overlap, otherwise a single estimate. Will be NA if optimal bandwidth estimation failed.
 }
 \references{
 Ridout & Linkie (2009) Estimating overlap of daily activity patterns from camera trap data. \emph{Journal of Agricultural, Biological, and Environmental Statistics} 14:322-337
@@ -71,8 +75,7 @@ overlapEst(tigerObs, pigObs)
 #     Dhat1     Dhat4     Dhat5 
 # 0.2908618 0.2692011 0.2275000 
 
-overlapEst(tigerObs, pigObs, adjust=c(NA, 1, NA))
-#    Dhat1     Dhat4     Dhat5 
-#       NA 0.2692011        NA 
-
+overlapEst(tigerObs, pigObs, type="Dhat4")
+#    Dhat4
+#    0.2692011
 }

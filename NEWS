@@ -1,9 +1,13 @@
 TO DO
 
 
+CHANGES IN VERSION 0.2.7.9001
+
+  * Added type argument to overlapEst and bootEst.
+
 CHANGES IN VERSION 0.2.7.9000
 
-  * Include checks for data in plotting functions.
+  * Included checks for data in plotting functions.
 
 CHANGES IN VERSION 0.2.7
 

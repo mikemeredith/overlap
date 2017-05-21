@@ -1,5 +1,6 @@
 overlapEst <-
-function( A, B, kmax=3, adjust=c(0.8, 1, 4), n.grid=128) {
+function( A, B, kmax=3, adjust=c(0.8, 1, 4), n.grid=128,
+    type=c("all", "Dhat1", "Dhat4", "Dhat5")) {
   ## Calculates 3 estimates of overlap: numbers 1,4 and 5 in R&L 2009:325
   # Args
   #   A, B : the observations of species A and species B, in RADIANS.
@@ -14,6 +15,15 @@ function( A, B, kmax=3, adjust=c(0.8, 1, 4), n.grid=128) {
 
   if(length(adjust) == 1)
     adjust <- rep(adjust, 3)
+  type <- match.arg(type)
+  index <- switch(type,
+            all = 0,
+            Dhat1 = {is.na(adjust) <- 2:3 ; 1},
+            Dhat4 = {is.na(adjust) <- c(1,3) ; 2},
+            Dhat5 = {is.na(adjust) <- 1:2 ; 3} )
+  if(index && is.na(adjust[index]))
+    stop("You specified adjust = NA for the selected type: ", type)
+  
   grid <- seq(0, 2*pi, length=n.grid)
   dA.current <- NA
   out <- rep(NA, 3)
@@ -70,5 +80,7 @@ function( A, B, kmax=3, adjust=c(0.8, 1, 4), n.grid=128) {
                 mean(dAx[(n1+1):n] >= dBx[(n1+1):n])
     }
   }  # end no uniroot error 
+  if(index)
+    out <- out[index]
   return(out)
 }
