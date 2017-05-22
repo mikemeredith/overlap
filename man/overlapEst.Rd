@@ -28,7 +28,7 @@ bandwidth adjustment; either a single value used for all 3 overlap estimates, or
 number of points at which to estimate density for comparison between species; smaller values give lower precision but run faster in simulations and bootstraps.
 }
   \item{type}{
-the name of the estimator to use, or "all" to produce all three estimates.
+the name of the estimator to use: \code{Dhat4} is recommended if both samples are larger then 50, otherwise use \code{Dhat1}. See Details. The default is "all" for compatibility with older versions.
 }
 }
 \details{
@@ -49,6 +49,10 @@ Dhat4 and Dhat5 use vectors of densities estimated at the times of the observati
 \figure{Dhat5.jpg}{Equation for Dhat5}
 
 where \emph{n, m} are the sample sizes and \emph{I} is the indicator function (1 if the condition is true, 0 otherwise).
+
+Dhat5 simply checks which curve is higher at each point; even tiny changes in the data can result in large, discontinuous changes in Dhat5, and it can take values > 1. Don't use Dhat5.
+
+Comparing curves at times of actual observations works well if there are enough observations of each species. Simulations show that Dhat4 is best when the smallest sample has at least 50 observations. Dhat1 compares curves at \code{n.grid} equally spaced points, and is best for small samples.
 }
 
 \value{

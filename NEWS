@@ -1,27 +1,29 @@
-TO DO
 
+CHANGES IN VERSION 0.2.7.9002 (2017-05-22)
 
-CHANGES IN VERSION 0.2.7.9001
+  * Added 'cores' argument to 'bootEst' to allow parallel processing.
 
-  * Added type argument to overlapEst and bootEst.
+CHANGES IN VERSION 0.2.7.9001 (2017-05-21)
 
-CHANGES IN VERSION 0.2.7.9000
+  * Added 'type' argument to 'overlapEst' and 'bootEst'.
+
+CHANGES IN VERSION 0.2.7.9000 (2017-04-15)
 
   * Included checks for data in plotting functions.
 
-CHANGES IN VERSION 0.2.7
+CHANGES IN VERSION 0.2.7 (2017-03-01)
 
   * Routines in overlap C code now registered.
 
-CHANGES IN VERSION 0.2.6
+CHANGES IN VERSION 0.2.6 (2016-02-07)
 
 * Changes to NAMESPACE to accommodate R 3.3.
 
-CHANGES IN VERSION 0.2.5
+CHANGES IN VERSION 0.2.5 (2015-04-16)
 
 * fixed bug in plotting functions: dots argument not passed to x axis code.
 
-CHANGES IN VERSION 0.2.4
+CHANGES IN VERSION 0.2.4 (2014-06-08)
 
 * plotting functions make full use of the dots argument (...); formal arguments
   ylim, xlab, ylab, etc, removed.
@@ -32,18 +34,18 @@ CHANGES IN VERSION 0.2.4
 
 * overlapPlot gains a rug argument (suggestion of Anand Roopsind)
 
-CHANGES IN VERSION 0.2.3
+CHANGES IN VERSION 0.2.3 (2014-05-04)
 
 * overlapPlot and densityPlot gain argument xcenter, which controls whether the
   the plot is centered at noon (default) or midnight (wish of Bronwyn Fancourt).
 
-CHANGES IN VERSION 0.2.2
+CHANGES IN VERSION 0.2.2 (2014-02-23)
 
 * overlapPlot gains argument ylim (wish of Jesse Lewis)
 
 * densityPlot gains arguments ylim, xlab, ylab (wish of Wenhong Xiao)
 
-CHANGES IN VERSION 0.2.0
+CHANGES IN VERSION 0.2.0 (2013-08-04)
 
 * Fixed bug in overlapPlot (reported by Jesse Lewis) and added overlapPlot to
   examples on 'kerinchi' help page.
