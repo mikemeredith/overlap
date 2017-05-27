@@ -61,6 +61,9 @@ test_that("overlapEst gives correct answer", {
   expect_that(
     round(overlapEst(tigerObs, pigObs, adjust=c(NA, 1, NA)), 6), 
     is_equivalent_to(c(NA_real_, 0.269201, NA_real_)))
+  expect_that(
+    round(overlapEst(tigerObs, pigObs, type="Dhat4"), 6), 
+    is_equivalent_to(0.269201))
 })
 
 context("Bootstrap functions")
@@ -76,6 +79,15 @@ test_that("resample smooth=TRUE gives correct answer", {
   boots <- bootEst(tigSim, pigSim)
   expect_that(round(colMeans(boots), 6),
     is_equivalent_to(c(0.365660, 0.348909, 0.328000)))
+  bootpar <- bootEst(tigSim, pigSim, cores=2)
+  expect_that(round(colMeans(bootpar), 6),
+    is_equivalent_to(c(0.365660, 0.348909, 0.328000)))
+  boots <- bootEst(tigSim, pigSim, adjust=c(NA, 1, NA))
+  expect_that(round(colMeans(boots), 6),
+    is_equivalent_to(c(NA_real_, 0.348909, NA_real_)))
+  boots <- bootEst(tigSim, pigSim, type="Dhat4")
+  expect_that(round(mean(boots), 6),
+    is_equivalent_to(0.348909))
 })
 
 test_that("resample smooth=FALSE gives correct answer", {
@@ -90,6 +102,15 @@ test_that("resample smooth=FALSE gives correct answer", {
   boots <- bootEst(tigSim, pigSim)
   expect_that(round(colMeans(boots), 6),
     is_equivalent_to(c(0.262617, 0.243341, 0.240000)))
+  bootpar <- bootEst(tigSim, pigSim, cores=2)
+  expect_that(round(colMeans(bootpar), 6),
+    is_equivalent_to(c(0.262617, 0.243341, 0.240000)))
+  boots <- bootEst(tigSim, pigSim, adjust=c(NA, 1, NA))
+  expect_that(round(colMeans(boots), 6),
+    is_equivalent_to(c(NA_real_, 0.243341, NA_real_)))
+  boots <- bootEst(tigSim, pigSim, type="Dhat4")
+  expect_that(round(mean(boots), 6),
+    is_equivalent_to(0.243341))
 })
 
 context("Confidence intervals")
@@ -193,6 +214,18 @@ test_that("densityPlot gives correct output", {
   expect_that(nrow(foo), equals(1024))
   wanted <- foo$x > -pi & foo$x < pi
   expect_that(round(mean(foo$y[wanted]) * 2 * pi, 4), equals( 1.0004))
+  
+  expect_error(densityPlot(factor(LETTERS)), "The times of observations must be in a numeric vector.")
+  expect_error(densityPlot(trees), "The times of observations must be in a numeric vector.")
+  expect_error(densityPlot(read.csv), "The times of observations must be in a numeric vector.")
+  expect_error(densityPlot(numeric(0)), "You have 0 different observations")
+  expect_error(densityPlot(2), "You have 1 different observations")
+  expect_error(densityPlot(rep(2, 5)), "You have 1 different observations")
+  expect_error(densityPlot(c(1,2,3,NA)), "Your data have missing values.")
+  expect_error(densityPlot(c(1,2,3,-2)), "You have times")
+  expect_error(densityPlot(c(1,2,3,10)), "You have times")
+
+  
 })
 
 test_that("overlapPlot gives correct output", {
@@ -212,7 +245,18 @@ test_that("overlapPlot gives correct output", {
   wanted <- foo$x > -pi & foo$x < pi
   expect_that(round(mean(foo$densityA[wanted]) * 2 * pi, 4), equals(0.9981))
   expect_that(round(mean(foo$densityB[wanted]) * 2 * pi, 4), equals(1.0008))
-})
+
+  expect_error(overlapPlot(pigObs, factor(LETTERS)), "The times of observations must be in a numeric vector.")
+  expect_error(overlapPlot(trees, pigObs), "The times of observations must be in a numeric vector.")
+  expect_error(overlapPlot(tigerObs, read.csv), "The times of observations must be in a numeric vector.")
+  expect_error(overlapPlot(numeric(0), tigerObs), "You have 0 different observations")
+  expect_error(overlapPlot(2, tigerObs), "You have 1 different observations")
+  expect_error(overlapPlot(rep(2, 5), pigObs), "You have 1 different observations")
+  expect_error(overlapPlot(pigObs, c(1,2,3,NA)), "Your data have missing values.")
+  expect_error(overlapPlot(c(1,2,3,-2), pigObs), "You have times")
+  expect_error(overlapPlot(c(1,2,3,10), tigerObs), "You have times")
+
+  })
 
 graphics.off()
 

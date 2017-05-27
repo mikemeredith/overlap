@@ -15,7 +15,7 @@ densityPlot(A, xscale = 24, xcenter = c("noon", "midnight"),
 
 \arguments{
   \item{A}{
-a vector of times of observations in \emph{radians}, ie. scaled to [\eqn{0, 2\pi}].
+a vector of times of observations in \emph{radians}, ie. scaled to [\eqn{0, 2\pi}]. It must include at least 2 unique observations to fit a kernel density.
 }
   \item{xscale}{
 The scale for the x axis: 24 (the default) produces a curve with 0 to 24 hours. NA gives a scale in radians, labelled with \eqn{pi}.

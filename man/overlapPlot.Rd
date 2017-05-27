@@ -16,7 +16,7 @@ overlapPlot(A, B, xscale = 24, xcenter = c("noon", "midnight"),
 
 \arguments{
   \item{A, B}{
-vectors of times of observations for species A and species B in \emph{radians}, ie. scaled to [\eqn{0, 2\pi}].
+vectors of times of observations for species A and species B in \emph{radians}, ie. scaled to [\eqn{0, 2\pi}]. Each must include at least 2 unique observations to fit a kernel density.
 }
   \item{xscale}{
 the scale for the x axis: 24 (the default) produces a curve with 0 to 24 hours. NA gives a scale in radians, labelled with \eqn{pi}.
