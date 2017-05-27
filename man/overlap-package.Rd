@@ -22,6 +22,8 @@ Maintainer: Mike Meredith <mmeredith@wcs.org>
 
 \seealso{
 See \code{\link{overlapTrue}} for the definition of the coefficient of overlapping, and \code{\link{overlapEst}} for equations for the estimators. See \code{\link{kerinci}} for an example of calculation of overlap and confidence interval from real data.
+
+The \R package \pkg{activity} has more functions for analysis of animal activity patterns.
 }
 
 \references{

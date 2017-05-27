@@ -158,7 +158,7 @@ We will see how this works with the \texttt{kerinci} data set. We will extract t
 tig2 <- timeRad[kerinci$Zone == 2 & kerinci$Sps == 'tiger']
 mac2 <- timeRad[kerinci$Zone == 2 & kerinci$Sps == 'macaque']
 min(length(tig2), length(mac2))
-tigmac2est <- overlapEst(tig2, mac2)
+tigmac2est <- overlapEst(tig2, mac2, type="Dhat4")
 tigmac2est 
 overlapPlot(tig2, mac2, main="Zone 2")
 legend('topright', c("Tigers", "Macaques"), lty=c(1,2), col=c(1,4), bty='n')
@@ -170,7 +170,7 @@ legend('topright', c("Tigers", "Macaques"), lty=c(1,2), col=c(1,4), bty='n')
   \label{fig:tigerMacaque2}
 \end{figure}
 
-Both of these samples have more than 75 observations, so the $\hat{\Delta}_4$ estimate, \texttt{Dhat4} in the \R{} code, is the most appropriate, giving an estimate of overlap of \Sexpr{round(tigmac2est[2], 2)}.
+Both of these samples have more than 75 observations, so we chose to use the $\hat{\Delta}_4$ estimate, \texttt{Dhat4} in the \R{} code, giving an estimate of overlap of \Sexpr{round(tigmac2est, 2)}.
 
 \section{Confidence intervals}
 \label{sec:CIs}
@@ -195,16 +195,14 @@ dim(mac2boot)
 
 This produces matrices with a column for each bootstrap sample. The bootstrap sample size is the same as the original sample size.
 
-Now we pass these two matrices to \texttt{bootEst} to generate estimates of overlap from each pair of samples. We are only concerned with $\hat{\Delta}_4$, so we will suppress estimation of the others by setting \texttt{adjust = c(NA, 1, NA)}; this reduces the time needed.
+Now we pass these two matrices to \texttt{bootEst} to generate estimates of overlap from each pair of samples. We select $\hat{\Delta}_4$:
 
 <<bootstrap2>>==
-tigmac2 <- bootEst(tig2boot, mac2boot, adjust = c(NA, 1, NA))  # takes a few seconds
-dim(tigmac2)
-BSmean <- colMeans(tigmac2)
-BSmean
+tigmac2 <- bootEst(tig2boot, mac2boot, type="Dhat4")  # takes a few seconds
+( BSmean <- mean(tigmac2) )
 @
 
-Note that the bootstrap mean, $\overline{BS}$, differs from $\hat{\Delta}$: \Sexpr{round(BSmean[2], 2)} versus \Sexpr{round(tigmac2est[2], 2)}. The difference, $\overline{BS} - \hat{\Delta}$, is the \emph{bootstrap bias}, and we need to take this into account when calculating the confidence interval.
+Note that the bootstrap mean, $\overline{BS}$, differs from $\hat{\Delta}$: \Sexpr{round(BSmean, 2)} versus \Sexpr{round(tigmac2est, 2)}. The difference, $\overline{BS} - \hat{\Delta}$, is the \emph{bootstrap bias}, and we need to take this into account when calculating the confidence interval.
 
 If the bootstrap bias were a good estimate of the original sampling bias, a better estimator of $\Delta$ would be $\tilde{\Delta} = 2\hat{\Delta} - \overline{BS}$. Our simulations show that $\tilde{\Delta}$ results in higher RMSE than the original $\hat{\Delta}$, so we do not recommend applying this correction.
 
@@ -220,8 +218,7 @@ An alternative approach is to use the standard deviation of the bootstrap result
 For the tiger-macaque data from Zone 2 we have the following estimates of a 95\% confidence interval:
 
 <<bootstrapCI>>==
-tmp <- tigmac2[, 2] # Extract the required column of the matrix
-bootCI(tigmac2est[2], tmp)
+bootCI(tigmac2est, tigmac2)
 @
 
 \texttt{bootCI} produces two further estimators: \texttt{basic} and \texttt{norm}. These are analogous to \texttt{basic0} and \texttt{norm0} but are intended for use with the bias-corrected estimator, $\tilde{\Delta}$. They match the \texttt{basic} and \texttt{norm} confidence intervals produced by \texttt{boot.ci} in package \texttt{boot}.
@@ -229,8 +226,7 @@ bootCI(tigmac2est[2], tmp)
 The coefficient of overlapping takes values in the interval [0,1]. All the confidence interval estimators except \texttt{perc} involve additive corrections which might result in values outside of this range. This can be avoided by carrying out the corrections on a logistic scale and back-transforming. This is done by \texttt{bootCIlogit}:
 
 <<bootstrapCIlogit>>==
-tmp <- tigmac2[, 2] # Extract the required column of the matrix
-bootCIlogit(tigmac2est[2], tmp)
+bootCIlogit(tigmac2est, tigmac2)
 @
 
 In this example, the CIs are well away from 0 or 1, so the difference is small (and \texttt{perc} is exactly the same as there's no correction anyway).

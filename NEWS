@@ -1,17 +1,9 @@
 
-CHANGES IN VERSION 0.2.7.9003 (2017-05-23)
-
-  * New features added to 'testthat' tests.
-
-CHANGES IN VERSION 0.2.7.9002 (2017-05-22)
+CHANGES IN VERSION 0.3.0 (2017-05-27)
 
   * Added 'cores' argument to 'bootEst' to allow parallel processing.
 
-CHANGES IN VERSION 0.2.7.9001 (2017-05-21)
-
   * Added 'type' argument to 'overlapEst' and 'bootEst'.
-
-CHANGES IN VERSION 0.2.7.9000 (2017-04-15)
 
   * Included checks for data in plotting functions.
 
