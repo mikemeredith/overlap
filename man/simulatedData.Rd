@@ -32,7 +32,6 @@ The figures below show the true densities (solid line), the simulated data (rug 
 }
 
 \examples{
-require(graphics)
 data(simulatedData)
 
 xx <- seq(0, 2*pi, length=128)

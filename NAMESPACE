@@ -12,6 +12,7 @@ importFrom("parallel", "detectCores", "makeCluster", "stopCluster",
 
 export(densityPlot, densityFit, getBandWidth, 
   overlapTrue, overlapEst, overlapPlot, 
+  sunTime,
   resample, bootEst, bootCI, bootCIlogit)
 
 # Not exported: rejectSampleRad, quantileInter

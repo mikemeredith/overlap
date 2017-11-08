@@ -27,6 +27,12 @@ test_that("built-in data sets are unchanged",  {
   expect_that(levels(kerinci$Sps),
     equals(c("boar", "clouded", "golden", "macaque", "muntjac",
              "sambar", "tapir", "tiger")))
+             
+  data(simCalls)
+  expect_that(dim(simCalls), equals(c(100, 2)))
+  expect_that(names(simCalls), equals(c("time", "dates")))
+  expect_that(round(sum(simCalls$time), 4), equals(210.7662))
+  expect_true(is.character(simCalls$dates))
 } )
   
 context("Main computation functions")
@@ -64,6 +70,15 @@ test_that("overlapEst gives correct answer", {
   expect_that(
     round(overlapEst(tigerObs, pigObs, type="Dhat4"), 6), 
     is_equivalent_to(0.269201))
+})
+
+test_that("sunTime gives correct answer", {
+  data(simCalls)
+  Dates <- as.POSIXct(simCalls$dates, tz="GMT")
+  coords <- matrix(c(-3, 56), nrow=1)
+  Coords <- sp::SpatialPoints(coords, proj4string=sp::CRS("+proj=longlat +datum=WGS84"))
+  st <- sunTime(simCalls$time, Dates, Coords)
+  expect_that(round(sum(st), 4), equals(207.0542))
 })
 
 context("Bootstrap functions")
