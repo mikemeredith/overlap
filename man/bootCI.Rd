@@ -14,10 +14,10 @@ bootCIlogit(t0, bt, conf = 0.95)
 }
 \arguments{
   \item{t0}{
-the statistic estimated from the original sample
+the statistic estimated from the original sample, usually the output from \code{\link{overlapEst}}.
 }
   \item{bt}{
-a vector of bootstrap statistics.
+a vector of bootstrap statistics, usually the output from \code{\link{bootEst}}
 }
   \item{conf}{
 a (single!) confidence interval to estimate.
@@ -56,24 +56,8 @@ Mike Meredith
 }
 
 \seealso{
-\code{boot.ci} in package \code{boot}.
+\code{boot.ci} in package \code{boot}. See \code{\link{kerinci}} for an example.
 }
 \examples{
-# Generate some sample data:
-set.seed(123)
-dat <- runif(20)
-t0 <- sd(dat)
-# and 999 nonparametric bootstrap estimates:
-bootmat <- matrix(sample(dat, 20*999, replace=TRUE), 20, 999)
-bt <- apply(bootmat, 2, sd)
-mean(bt)
-mean(bt) - t0  # bootstrap bias
-
-bootCI(t0, bt)
-bootCIlogit(t0, bt)
-
-bootCI(t0, bt, conf=0.05)
-
-# Which of these 5% CIs include the point estimate, t0?
-bootCI(t0, bt, conf=0.05) < t0  # Should be "TRUE  FALSE"
+# See ?kerinci
 }
