@@ -5,7 +5,7 @@
 Convert clock times to sun times
 }
 \description{
-Converts a vector of clock times to "sun times", by mapping sunrise to \eqn{\pi/2} and sunset to \eqn{3\pi/2}. Sunrise and sunset times are determined based on the dates and locations provided. See Nouvellet et al (2012) for a discussion. Requires \pkg{link{maptools}}.
+Converts a vector of clock times to "sun times", by mapping sunrise to \eqn{\pi/2} and sunset to \eqn{3\pi/2}. Sunrise and sunset times are determined based on the dates and locations provided. See Nouvellet et al (2012) for a discussion. Requires the \pkg{maptools} package.
 }
 \usage{
 sunTime(clockTime, Dates, Coords)
