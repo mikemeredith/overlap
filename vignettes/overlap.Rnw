@@ -28,7 +28,7 @@ options(continue="  ")
 
 Camera traps -- cameras linked to detectors so that they fire when an animal is present -- are a major source of information on the abundance and habitat preferences of rare or shy forest animals. Modern cameras record the time of the photo, and the use of this to investigate diel~\footnote{We use ``diel" for 24-hour cycles, and reserve ``diurnal" to mean ``not nocturnal".} activity patterns was immediately recognised \citep{GriffithsVanSchaik1993}.
 
-Initially this resulted in broad classification of taxa as diurnal, nocturnal, crepuscular, or cathemeral \citep{vanSchaikGriffiths1996}. More recently, researchers have compared activity patterns among species to see how overlapping patterns may relate to competition or predation \citep{LinkieRidout2011,Carver+2011,Ramesh+2012,Carter+2012,Kamler+2012,Ross+2013}. % ADD  other refs?
+Initially this resulted in broad classification of taxa as diurnal, nocturnal, crepuscular, or cathemeral \citep{vanSchaikGriffiths1996}. More recently, researchers have compared activity patterns among species to see how overlapping patterns may relate to competition or predation \citep{LinkieRidout2011,Carver+2011,Ramesh+2012,Carter+2012,Kamler+2012,Ross+2013, Azevedo+2018}. % ADD  other refs?
 
 \citet{RidoutLinkie2009} presented methods to fit kernel density functions to times of observations of animals and to estimate the coefficient of overlapping, a quantitative measure ranging from 0 (no overlap) to 1 (identical activity patterns). The code they used forms the basis of the \texttt{overlap} package.
 
@@ -259,11 +259,11 @@ With small samples (smaller sample <~75) and $\Delta >~0.8$, coverage sometimes 
 \subsection{Pooling data}
 \label{sec:pooling}
 
-Pooled data give higher estimates of overlap than the original, unpooled data \citep{RidoutLinkie2009}. Suppose we find a species of bat that emerges immediately after sunset and a hawk which goes to roost just before sunset: their activity patterns do not overlap and presumably the hawk will not be feeding on the bats. But the time of sunset changes; data from December only or from June only show no overlap, but the pooled data do, and this apparent overlap is an artifact of pooling. 
+Pooled data give higher estimates of overlap than the original, unpooled data \citep{RidoutLinkie2009}. Suppose we find a species of bat that emerges immediately after sunset and a hawk which goes to roost just before sunset: their activity patterns do not overlap and presumably the hawk will not be feeding on the bats. But the time of sunset changes; data from December only or from June only show no overlap, but the pooled data do, and this apparent overlap is an artefact of pooling. 
 
 This is a clear-cut example. In general, differences in activity patterns across sites or time periods will be smaller, but any heterogeneity will inflate the overlap estimates from pooled data. Care is needed when comparing coefficients of overlap among study areas or periods of varying extent or degree of heterogeneity.
 
-For more on the issues surrounding changes in sunrise and sunset and ways of dealing with them, see \citet{Nouvellet+2012}. Function \texttt{sunriset} in package \texttt{maptools} calculates sunrise and sunset times for any location.
+One way to mitigate these differences is to map "clock time" to "sun time" \citep{Nouvellet+2012}. The new function \texttt{sunTime} allows this to be done, see its help page. \citet{Azevedo+2018} used this approach for their study of puma.
 
 \subsection{What ``activity" is observed?}
 \label{sec:activity}
