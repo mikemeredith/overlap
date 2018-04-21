@@ -1,4 +1,10 @@
 
+CHANGES IN VERSION 0.3.1.9000 (2018-04-21)
+
+  * Vignette updated to mention sunTime and Azevedo et al 2018 paper.
+
+  * sunTime examples only run if sp and maptools are installed.
+
 CHANGES IN VERSION 0.3.1 (2018-04-19)
 
   * Improvements to help page for 'bootCI'.
