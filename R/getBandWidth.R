@@ -4,11 +4,9 @@ function(A, kmax = 3) {
   for (k in 1:kmax) {
     trigmom <- TrigMomRad(A, k)
     # CHECK Afun value at end points: opposite signs or zero
-    # if (Afun(0.0001, trigmom, k) * Afun(500, trigmom, k) >= 0)
-       # return(NA)   # uniroot error
-    # estkappa[k] <- uniroot(Afun, c(0.0001,500), trigmom, k)$root
-    if (Afun(0.0001, trigmom, k) * Afun(500, trigmom, k) <= 0)
-      estkappa[k] <- uniroot(Afun, c(0.0001,500), trigmom, k)$root
+    # Upper limit reduced from 500 to 350 in version 0.3.1.9001, 2018-04-24
+    if (Afun(0.0001, trigmom, k) * Afun(350, trigmom, k) <= 0)
+      estkappa[k] <- uniroot(Afun, c(0.0001,350), trigmom, k)$root
   }
   kappahat <- max(estkappa[1:kmax])
   if(kappahat > 0)  {
