@@ -1,0 +1,18 @@
+citHeader("To cite overlap in publications use:")
+
+citEntry(entry = "Article",
+  title = "Estimating overlap of daily activity patterns from camera trap data",
+  author = personList(as.person("Martin Ridout"),
+                     as.person("Matthew Linkie")),
+  journal = "Journal of Agricultural, Biological, and Environmental Statistics",
+  year = "2009",
+  volume = "14",
+  number = "3",
+  pages="322--337",
+
+  textVersion  =
+  paste("Martin Ridout, Matthew Linkie (2009).",
+        "Estimating overlap of daily activity patterns from camera trap data.",
+        "Journal of Agricultural, Biological, and Environmental Statistics 14(3), 322-337.")
+)
+

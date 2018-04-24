@@ -1,4 +1,8 @@
 
+CHANGES IN VERSION 0.3.1.9002 (2018-04-24)
+
+  * Added CITATION file.
+
 CHANGES IN VERSION 0.3.1.9001 (2018-04-24)
 
   * Adjustment to getBandWidth to fail less often.
