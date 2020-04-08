@@ -19,7 +19,7 @@ a vector of times of observations in \emph{radians}, ie. scaled to [\eqn{0, 2\pi
 a POSIXct object with the dates of the observations; the time zone must be set to the time zone used for 'clockTime'.
 }
   \item{Coords}{
-a SpatialPoints object with the locations of the observations, or with a single point giving a approximate location for the study area.
+a SpatialPoints object with the locations of the observations, or with a single point giving a approximate location for the study area; the coordinates must be geographical coordinates, eg, WGS84, with long before lat.
 }
 }
 \value{
@@ -33,12 +33,12 @@ Mike Meredith.
 }
 \examples{
 # Check that sp and maptools packages are installed
-if(requireNamespace("sp") && requireNamespace("maptools")) { 
+if(requireNamespace("sp") && requireNamespace("maptools")) {
   # Get example data:
   data(simCalls)
   str(simCalls)
 
-  # Convert dates to a POSIXct object with the right time zone (GMT): 
+  # Convert dates to a POSIXct object with the right time zone (GMT):
   Dates <- as.POSIXct(simCalls$dates, tz="GMT")
 
   # Create a SpatialPoints object with the location
