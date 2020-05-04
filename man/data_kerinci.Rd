@@ -55,20 +55,18 @@ length(spsB)
 
 # Calculate estimates of overlap:
 ( Dhats <- overlapEst(spsA, spsB) )  # or just get Dhat1
-( Dhats <- overlapEst(spsA, spsB, type="Dhat1") )
+( Dhat1 <- overlapEst(spsA, spsB, type="Dhat1") )
 
-# Do smoothed bootstrap:
-# Generate 999 data sets:
-bsA <- resample(spsA, 999)
-bsB <- resample(spsB, 999)
-# Analyse with bootEst, estimating only Dhat1:
-bs <- bootEst(bsA, bsB, type="Dhat1")  # Takes a while
+# Do 999 smoothed bootstrap values:
+bs <- bootstrap(spsA, spsB, 999, type="Dhat1")
 mean(bs)
-
+hist(bs)
+abline(v=Dhat1, col='red', lwd=2)
+abline(v=mean(bs), col='blue', lwd=2, lty=3)
 
 # Get confidence intervals:
-bootCI(Dhats[1], bs)['norm0', ]
-bootCI(Dhats[1], bs)['basic0', ]
+bootCI(Dhat1, bs)['norm0', ]
+bootCI(Dhat1, bs)['basic0', ]
 }
 
 \keyword{datasets}

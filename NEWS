@@ -1,4 +1,10 @@
 
+CHANGES IN VERSION 0.3.2.9001 (2020-05-04)
+
+  * Added function 'bootstrap'.
+
+  * Updated maintainer email.
+
 CHANGES IN VERSION 0.3.2 (2018-05-03)
 
   * Fixed getBandWidth to return NA on failure as documented(not NaN or Inf).
