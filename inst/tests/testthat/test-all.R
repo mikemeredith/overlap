@@ -27,14 +27,14 @@ test_that("built-in data sets are unchanged",  {
   expect_that(levels(kerinci$Sps),
     equals(c("boar", "clouded", "golden", "macaque", "muntjac",
              "sambar", "tapir", "tiger")))
-             
+
   data(simCalls)
   expect_that(dim(simCalls), equals(c(100, 2)))
   expect_that(names(simCalls), equals(c("time", "dates")))
   expect_that(round(sum(simCalls$time), 4), equals(210.7662))
   expect_true(is.character(simCalls$dates))
 } )
-  
+
 context("Main computation functions")
 test_that("overlapTrue gives correct answer", {
   data(simulatedData)
@@ -44,9 +44,9 @@ test_that("overlapTrue gives correct answer", {
 
 test_that("densityFit gives correct answer", {
   data(simulatedData)
-  expect_that(densityFit(tigerObs, c(0, pi/2, pi, 3*pi/2, 2*pi), 30), 
+  expect_that(densityFit(tigerObs, c(0, pi/2, pi, 3*pi/2, 2*pi), 30),
     equals(c(0.02440435, 0.44522913, 0.02179983, 0.50513539, 0.02440435), tolerance = 1e-7))
-  expect_that(densityFit(pigObs, c(0, pi/2, pi, 3*pi/2, 2*pi), 10), 
+  expect_that(densityFit(pigObs, c(0, pi/2, pi, 3*pi/2, 2*pi), 10),
     equals(c(7.877244e-06, 4.522317e-02, 4.622752e-01, 1.216268e-01, 7.877244e-06),
       tolerance = 1e-7))
 })
@@ -64,13 +64,13 @@ test_that("overlapEst gives correct answer", {
   expect_that(round(overlapEst(tigerObs, pigObs), 5),
     is_equivalent_to(c(0.29086, 0.26920, 0.22750)))
   expect_that(
-    round(overlapEst(tigerObs, pigObs, adjust=c(1.2, 1.5, 1)), 5), 
+    round(overlapEst(tigerObs, pigObs, adjust=c(1.2, 1.5, 1)), 5),
     is_equivalent_to(c(0.31507, 0.28849, 0.23750)))
   expect_that(
-    round(overlapEst(tigerObs, pigObs, adjust=c(NA, 1, NA)), 6), 
+    round(overlapEst(tigerObs, pigObs, adjust=c(NA, 1, NA)), 6),
     is_equivalent_to(c(NA_real_, 0.269201, NA_real_)))
   expect_that(
-    round(overlapEst(tigerObs, pigObs, type="Dhat4"), 6), 
+    round(overlapEst(tigerObs, pigObs, type="Dhat4"), 6),
     is_equivalent_to(0.269201))
 })
 
@@ -83,28 +83,62 @@ test_that("sunTime gives correct answer", {
   expect_that(round(sum(st), 4), equals(207.0542))
 })
 
+stopifnot(getRversion() >= '3.6.0')
+
 context("Bootstrap functions")
+test_that("bootstrap smooth=TRUE gives correct answer", {
+  data(simulatedData)
+  set.seed(123)
+  boots <- bootstrap(tigerObs, pigObs, nb=99)
+  expect_that(round(mean(boots), 6),
+    is_equivalent_to(0.357667))
+  # set.seed(123) # parallel not reproducible
+  # bootpar <- bootstrap(tigerObs, pigObs, nb=99, cores=2)
+  # expect_that(round(mean(bootpar), 6),
+    # is_equivalent_to(0.304968))
+  set.seed(123)
+  boots <- bootstrap(tigerObs, pigObs, nb=99, type="Dhat4")
+  expect_that(round(mean(boots), 6),
+    is_equivalent_to(0.33061))
+})
+
+test_that("bootstrap smooth=FALSE gives correct answer", {
+  data(simulatedData)
+  set.seed(123)
+  boots <- bootstrap(tigerObs, pigObs, nb=99, smooth=FALSE)
+  expect_that(round(mean(boots), 6),
+    is_equivalent_to(0.297175))
+  # set.seed(123) # parallel not reproducible
+  # bootpar <- bootstrap(tigerObs, pigObs, nb=99, cores=2)
+  # expect_that(round(mean(bootpar), 6),
+    # is_equivalent_to(0.304968))
+  set.seed(123)
+  boots <- bootstrap(tigerObs, pigObs, nb=99, smooth=FALSE, type="Dhat4") 
+  expect_that(round(mean(boots), 6),
+    is_equivalent_to(0.26333))
+})
+
 test_that("resample smooth=TRUE gives correct answer", {
   data(simulatedData)
   set.seed(123)
   tigSim <- resample(tigerObs, 5, TRUE)
   expect_that(round(colMeans(tigSim), 6),
-    equals(c(3.231229, 3.279921, 3.711014, 3.379395, 3.080605)))
+    equals(c(3.088229, 3.459810, 3.103107, 3.149954, 3.055276)))
   pigSim <- resample(pigObs, 5, TRUE)
   expect_that(round(colMeans(pigSim), 6),
-    equals(c(3.267318, 3.305281, 3.434542, 3.303898, 3.296674)))
+    equals(c(3.184782, 3.193389, 3.180786, 3.316040, 3.317885)))
   boots <- bootEst(tigSim, pigSim)
   expect_that(round(colMeans(boots), 6),
-    is_equivalent_to(c(0.365660, 0.348909, 0.328000)))
+    is_equivalent_to(c(0.342983, 0.326681, 0.310500)))
   bootpar <- bootEst(tigSim, pigSim, cores=2)
   expect_that(round(colMeans(bootpar), 6),
-    is_equivalent_to(c(0.365660, 0.348909, 0.328000)))
+    is_equivalent_to(c(0.342983, 0.326681, 0.310500)))
   boots <- bootEst(tigSim, pigSim, adjust=c(NA, 1, NA))
   expect_that(round(colMeans(boots), 6),
-    is_equivalent_to(c(NA_real_, 0.348909, NA_real_)))
+    is_equivalent_to(c(NA_real_, 0.326681, NA_real_)))
   boots <- bootEst(tigSim, pigSim, type="Dhat4")
   expect_that(round(mean(boots), 6),
-    is_equivalent_to(0.348909))
+    is_equivalent_to(0.326681))
 })
 
 test_that("resample smooth=FALSE gives correct answer", {
@@ -112,22 +146,22 @@ test_that("resample smooth=FALSE gives correct answer", {
   set.seed(123)
   tigSim <- resample(tigerObs, 5, FALSE)
   expect_that(round(colMeans(tigSim), 6),
-    equals(c(3.277974, 3.033689, 3.332466, 3.141917, 3.645971)))
+    equals(c(3.305859, 3.110860, 3.184909, 3.271987, 3.262150)))
   pigSim <- resample(pigObs, 5, FALSE)
   expect_that(round(colMeans(pigSim), 6),
-    equals(c(3.361474, 3.397498, 3.276355, 3.395407, 3.331279)))
+    equals(c(3.347331, 3.524023, 3.279544, 3.265070, 3.374756)))
   boots <- bootEst(tigSim, pigSim)
   expect_that(round(colMeans(boots), 6),
-    is_equivalent_to(c(0.262617, 0.243341, 0.240000)))
+    is_equivalent_to(c(0.281553, 0.260792, 0.207000)))
   bootpar <- bootEst(tigSim, pigSim, cores=2)
   expect_that(round(colMeans(bootpar), 6),
-    is_equivalent_to(c(0.262617, 0.243341, 0.240000)))
+    is_equivalent_to(c(0.281553, 0.260792, 0.207000)))
   boots <- bootEst(tigSim, pigSim, adjust=c(NA, 1, NA))
   expect_that(round(colMeans(boots), 6),
-    is_equivalent_to(c(NA_real_, 0.243341, NA_real_)))
+    is_equivalent_to(c(NA_real_, 0.260792, NA_real_)))
   boots <- bootEst(tigSim, pigSim, type="Dhat4")
   expect_that(round(mean(boots), 6),
-    is_equivalent_to(0.243341))
+    is_equivalent_to(0.260792))
 })
 
 context("Confidence intervals")
@@ -141,23 +175,23 @@ test_that("bootCI gives same results as boot.ci for common CIs", {
   bt <- as.vector(bootout$t)
   expect_that(t0, equals(mean(dat)))
 
-  expect_that(bootCI(t0, bt)['norm',], 
+  expect_that(bootCI(t0, bt)['norm',],
     is_equivalent_to(boot.ci(bootout, 0.95, "norm")$norm[2:3]))
-  expect_that(bootCI(t0, bt)['basic',], 
+  expect_that(bootCI(t0, bt)['basic',],
     is_equivalent_to(boot.ci(bootout, 0.95, "basic")$basic[4:5]))
-  expect_that(bootCI(t0, bt)['perc',], 
+  expect_that(bootCI(t0, bt)['perc',],
     is_equivalent_to(boot.ci(bootout, 0.95, "perc")$perc[4:5]))
 
-  expect_that(bootCI(t0, bt, 0.8)['norm',], 
+  expect_that(bootCI(t0, bt, 0.8)['norm',],
     is_equivalent_to(boot.ci(bootout, 0.8, "norm")$norm[2:3]))
-  expect_that(bootCI(t0, bt, 0.8)['basic',], 
+  expect_that(bootCI(t0, bt, 0.8)['basic',],
     is_equivalent_to(boot.ci(bootout, 0.8, "basic")$basic[4:5]))
-  expect_that(bootCI(t0, bt, 0.8)['perc',], 
+  expect_that(bootCI(t0, bt, 0.8)['perc',],
     is_equivalent_to(boot.ci(bootout, 0.8, "perc")$perc[4:5]))
 
-  expect_that(bootCIlogit(t0, bt)['norm',], 
+  expect_that(bootCIlogit(t0, bt)['norm',],
     is_equivalent_to(boot.ci(bootout, 0.95, "norm", h=qlogis, hinv=plogis)$norm[2:3]))
-  expect_that(bootCIlogit(t0, bt)['basic',], 
+  expect_that(bootCIlogit(t0, bt)['basic',],
     is_equivalent_to(boot.ci(bootout, 0.95, "basic", h=qlogis, hinv=plogis)$basic[4:5]))
 } )
 
@@ -168,16 +202,16 @@ test_that("bootCI gives correct results", {
   bootmat <- matrix(sample(dat, 20*999, replace=TRUE), 20, 999)
   bt <- apply(bootmat, 2, sd)
 
-  expect_that(round(bootCI(t0, bt)['norm',], 6), 
-    is_equivalent_to(c(0.260553, 0.386618)))
-  expect_that(round(bootCI(t0, bt)['perc',], 6), 
-    is_equivalent_to(c(0.235347, 0.365483)))
-  expect_that(round(bootCI(t0, bt)['basic',], 6), 
-    is_equivalent_to(c(0.261460, 0.391595)))
-  expect_that(round(bootCI(t0, bt)['norm0',], 6), 
-    is_equivalent_to(c(0.250439, 0.376504)))
-  expect_that(round(bootCI(t0, bt)['basic0',], 6), 
-    is_equivalent_to(c(0.245461, 0.375597)))
+  expect_that(round(bootCI(t0, bt)['norm',], 6),
+    is_equivalent_to(c(0.257335, 0.389638)))
+  expect_that(round(bootCI(t0, bt)['perc',], 6),
+    is_equivalent_to(c(0.229293, 0.364734 )))
+  expect_that(round(bootCI(t0, bt)['basic',], 6),
+    is_equivalent_to(c(0.262208, 0.397649 )))
+  expect_that(round(bootCI(t0, bt)['norm0',], 6),
+    is_equivalent_to(c(0.247319, 0.379623 )))
+  expect_that(round(bootCI(t0, bt)['basic0',], 6),
+    is_equivalent_to(c(0.239309, 0.374750)))
 } )
 
 test_that("bootCIlogit gives correct results", {
@@ -187,51 +221,36 @@ test_that("bootCIlogit gives correct results", {
   bootmat <- matrix(sample(dat, 20*999, replace=TRUE), 20, 999)
   bt <- apply(bootmat, 2, sd)
 
-  expect_that(round(bootCIlogit(t0, bt)['norm',], 6), 
-    is_equivalent_to(c(0.262109, 0.394479)))
-  expect_that(round(bootCIlogit(t0, bt)['perc',], 6), 
-    is_equivalent_to(c(0.235347, 0.365483)))
-  expect_that(round(bootCIlogit(t0, bt)['basic',], 6), 
-    is_equivalent_to(c(0.265761, 0.403832)))
-  expect_that(round(bootCIlogit(t0, bt)['norm0',], 6), 
-    is_equivalent_to(c(0.252147, 0.382090)))
-  expect_that(round(bootCIlogit(t0, bt)['basic0',], 6), 
-    is_equivalent_to(c(0.244864, 0.377662)))
+  expect_that(round(bootCIlogit(t0, bt)['norm',], 6),
+    is_equivalent_to(c(0.258635, 0.398876)))
+  expect_that(round(bootCIlogit(t0, bt)['perc',], 6),
+    is_equivalent_to(c(0.229293, 0.364734)))
+  expect_that(round(bootCIlogit(t0, bt)['basic',], 6),
+    is_equivalent_to(c(0.266392, 0.412031)))
+  expect_that(round(bootCIlogit(t0, bt)['norm0',], 6),
+    is_equivalent_to(c(0.248729, 0.386398)))
+  expect_that(round(bootCIlogit(t0, bt)['basic0',], 6),
+    is_equivalent_to(c(0.238671, 0.376942)))
 } )
 
-
-test_that("quantileInter gives same results as norm.inter", {
-  set.seed(123)
-  foo <- runif(200)
-  expect_that(round(quantileInter(foo), 6),
-    equals(c(0.045564, 0.979369)))
-  expect_that(round(quantileInter(foo[-1]), 6),
-    equals(c(0.045556, 0.979822)))
-  expect_that(round(quantileInter(foo, conf=0.8), 6),
-    equals(c(0.141946, 0.894843)))
-
-  diddyfoo <- runif(20)
-  expect_that(quantileInter(diddyfoo),
-    equals(rep(NA_real_, 2)))
-} )
 
 context("Output from plotting functions")
 test_that("densityPlot gives correct output", {
   data(simulatedData)
   foo <- densityPlot(pigObs)
   expect_that(class(foo), equals("data.frame"))
-  expect_that(names(foo), equals(c("x", "y"))) 
+  expect_that(names(foo), equals(c("x", "y")))
   expect_that(nrow(foo), equals(128))
   wanted <- foo$x > 0 & foo$x < 24
   expect_that(round(mean(foo$y[wanted]) * 24, 4), equals( 0.9961))
 
   foo <- densityPlot(tigerObs, xscale = NA, xcenter = "m", n.grid=1024)
   expect_that(class(foo), equals("data.frame"))
-  expect_that(names(foo), equals(c("x", "y"))) 
+  expect_that(names(foo), equals(c("x", "y")))
   expect_that(nrow(foo), equals(1024))
   wanted <- foo$x > -pi & foo$x < pi
   expect_that(round(mean(foo$y[wanted]) * 2 * pi, 4), equals( 1.0004))
-  
+
   expect_error(densityPlot(factor(LETTERS)), "The times of observations must be in a numeric vector.")
   expect_error(densityPlot(trees), "The times of observations must be in a numeric vector.")
   expect_error(densityPlot(read.csv), "The times of observations must be in a numeric vector.")
@@ -242,14 +261,14 @@ test_that("densityPlot gives correct output", {
   expect_error(densityPlot(c(1,2,3,-2)), "You have times")
   expect_error(densityPlot(c(1,2,3,10)), "You have times")
 
-  
+
 })
 
 test_that("overlapPlot gives correct output", {
   data(simulatedData)
   foo <- overlapPlot(pigObs, tigerObs)
   expect_that(class(foo), equals("data.frame"))
-  expect_that(names(foo), equals(c("x", "densityA", "densityB"))) 
+  expect_that(names(foo), equals(c("x", "densityA", "densityB")))
   expect_that(nrow(foo), equals(128))
   wanted <- foo$x > 0 & foo$x < 24
   expect_that(round(mean(foo$densityA[wanted]) * 24, 4), equals( 1.0079))
@@ -257,7 +276,7 @@ test_that("overlapPlot gives correct output", {
 
   foo <- overlapPlot(pigObs, tigerObs, xscale = NA, xcenter = "m", n.grid=1024)
   expect_that(class(foo), equals("data.frame"))
-  expect_that(names(foo), equals(c("x", "densityA", "densityB"))) 
+  expect_that(names(foo), equals(c("x", "densityA", "densityB")))
   expect_that(nrow(foo), equals(1024))
   wanted <- foo$x > -pi & foo$x < pi
   expect_that(round(mean(foo$densityA[wanted]) * 2 * pi, 4), equals(0.9981))

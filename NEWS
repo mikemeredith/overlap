@@ -1,4 +1,10 @@
 
+CHANGES IN VERSION 0.3.2.9002 (2020-05-04)
+
+  * Updated testthat tests for new RNGkind.
+
+  * Added tests for 'bootstrap'.
+
 CHANGES IN VERSION 0.3.2.9001 (2020-05-04)
 
   * Added function 'bootstrap'.

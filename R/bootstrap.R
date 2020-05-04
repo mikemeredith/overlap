@@ -35,8 +35,8 @@ bootstrap <- function(A, B, nb, smooth=TRUE, kmax=3, adjust=1, n.grid=128,
     out <- sapply(seq_len(nb), run1)
   } else {
     cl <- makeCluster(cores) ; on.exit(stopCluster(cl))
-    clusterExport(cl, c("A", "B", "probA", "probB", "n",
-        "kmax", "adjust", "n.grid", "type"))
+    # clusterExport(cl, c("A", "B", "probA", "probB", "n",
+        # "kmax", "adjust", "n.grid", "type"))
     out <- parSapply(cl, seq_len(nb), run1)
   }
   return(unname(out))
