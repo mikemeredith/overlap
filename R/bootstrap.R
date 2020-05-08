@@ -1,10 +1,12 @@
 
 # One-by-one bootstrapping
 
-bootstrap <- function(A, B, nb, smooth=TRUE, kmax=3, adjust=1, n.grid=128,
+bootstrap <- function(A, B, nb, smooth=TRUE, kmax=3, adjust=NA, n.grid=128,
     type=c("Dhat1", "Dhat4", "Dhat5"), cores=1) {
 
   type <- match.arg(type)
+  if(is.na(adjust))
+    adjust <- c(0.8, 1, 4)[match(type, c("Dhat1", "Dhat4", "Dhat5"))]
   if(is.na(cores))
     cores <- parallel::detectCores() - 1
   n <- c(length(A), length(B))
@@ -35,8 +37,6 @@ bootstrap <- function(A, B, nb, smooth=TRUE, kmax=3, adjust=1, n.grid=128,
     out <- sapply(seq_len(nb), run1)
   } else {
     cl <- makeCluster(cores) ; on.exit(stopCluster(cl))
-    # clusterExport(cl, c("A", "B", "probA", "probB", "n",
-        # "kmax", "adjust", "n.grid", "type"))
     out <- parSapply(cl, seq_len(nb), run1)
   }
   return(unname(out))

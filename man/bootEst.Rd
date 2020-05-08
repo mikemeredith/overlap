@@ -13,7 +13,7 @@ A vector of bootstrap estimates can then be used to produce confidence intervals
 }
 
 \usage{
-bootstrap(A, B, nb, smooth=TRUE, kmax=3, adjust=1, n.grid=128,
+bootstrap(A, B, nb, smooth=TRUE, kmax=3, adjust=NA, n.grid=128,
     type=c("Dhat1", "Dhat4", "Dhat5"), cores=1)
 
 resample(x, nb, smooth = TRUE, kmax = 3, adjust = 1, n.grid = 512)
@@ -36,7 +36,7 @@ if TRUE, smoothed bootstrap samples are produced.
 maximum value of k for optimal bandwidth estimation.
 }
   \item{adjust}{
-bandwidth adjustment: see Details.
+bandwidth adjustment. If \code{adjust=NA} in \code{bootstrap}, adjust will be set to 0.8 for \code{type="Dhat1"}, 1 for \code{type="Dhat4"} and 4 for \code{type="Dhat5"}.
 }
   \item{n.grid}{
 number of points at which to estimate density for comparison between species; smaller values give lower precision but run faster in bootstraps.

@@ -1,4 +1,8 @@
 
+CHANGES IN VERSION 0.3.2.9003 (2020-05-08)
+
+  * Changed default 'adjust' parameter in 'bootstrap' to be appropriate to estimator type.
+
 CHANGES IN VERSION 0.3.2.9002 (2020-05-04)
 
   * Updated testthat tests for new RNGkind.
