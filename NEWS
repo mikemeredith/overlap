@@ -1,31 +1,17 @@
 
-CHANGES IN VERSION 0.3.2.9004 (2020-05-09)
+CHANGES IN VERSION 0.3.3 (2020-05-09)
 
-  * Updated testthat tests for new default 'adjust' parameter in 'bootstrap'.
+  * Updated 'testthat' tests for new RNGkind.
 
-  * Modified vignette to include 'bootstrap' function.
-
-CHANGES IN VERSION 0.3.2.9003 (2020-05-08)
-
-  * Changed default 'adjust' parameter in 'bootstrap' to be appropriate to estimator type.
-
-CHANGES IN VERSION 0.3.2.9002 (2020-05-04)
-
-  * Updated testthat tests for new RNGkind.
-
-  * Added tests for 'bootstrap'.
-
-CHANGES IN VERSION 0.3.2.9001 (2020-05-04)
-
-  * Added function 'bootstrap'.
+  * Added function 'bootstrap'; modified vignette to use 'bootstrap'.
 
   * Updated maintainer email.
 
 CHANGES IN VERSION 0.3.2 (2018-05-03)
 
-  * Fixed getBandWidth to return NA on failure as documented(not NaN or Inf).
+  * Fixed 'getBandWidth' to return NA on failure as documented (not NaN or Inf).
 
-  * Vignette updated to mention sunTime and Azevedo et al 2018 paper.
+  * Vignette updated to mention 'sunTime' and Azevedo et al 2018 paper.
 
 CHANGES IN VERSION 0.3.1 (2018-04-19)
 
