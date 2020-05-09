@@ -1,4 +1,10 @@
 
+CHANGES IN VERSION 0.3.2.9004 (2020-05-09)
+
+  * Updated testthat tests for new default 'adjust' parameter in 'bootstrap'.
+
+  * Modified vignette to include 'bootstrap' function.
+
 CHANGES IN VERSION 0.3.2.9003 (2020-05-08)
 
   * Changed default 'adjust' parameter in 'bootstrap' to be appropriate to estimator type.

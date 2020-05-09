@@ -41,31 +41,3 @@ bootstrap <- function(A, B, nb, smooth=TRUE, kmax=3, adjust=NA, n.grid=128,
   }
   return(unname(out))
 }
-
-# testing, based on vignette
-if(FALSE) {
-  library(overlap)
-  data(kerinci)
-  timeRad <- kerinci$Time * 2 * pi
-  tig2 <- timeRad[kerinci$Zone == 2 & kerinci$Sps == 'tiger']
-  mac2 <- timeRad[kerinci$Zone == 2 & kerinci$Sps == 'macaque']
-  tigmac2est <- overlapEst(tig2, mac2, type="Dhat4")
-
-  # the old way
-  tig2boot <- resample(tig2, 10000)
-  mac2boot <- resample(mac2, 10000)
-  object.size(mac2boot) # 10 MB
-  system.time(
-  tigmac2 <- bootEst(tig2boot, mac2boot, type="Dhat4"))  # takes 66 seconds
-  ( BSmean <- mean(tigmac2) )
-
-  # the new way
-  system.time(
-  # tm2 <- BS1(tig2, mac2, nb=10000, type="Dhat4"))  # 64 secs
-  tm2 <- BS1(tig2, mac2, nb=10000, type="Dhat4", cores=3))  # 27 secs
-  mean(tm2)
-  hist(tm2)
-
-  bootCI(tigmac2est, tigmac2)
-  bootCI(tigmac2est, tm2)  # small differences in 3rd decimal place, MC error.
-}

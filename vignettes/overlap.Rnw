@@ -54,7 +54,7 @@ range(kerinci$Time)
 
 The data provide time-of-capture data from 4 Zones within the Park for 8 species: wild pig (``\texttt{boar}''), clouded leopard, golden cat, pig-tailed macaque, common muntjac, sambar deer, tapir, and tiger.
 
-The unit of time is the day, so values range from 0 to 1. Package \texttt{overlap} works entirely in \emph{radians}: fitting density curves uses trigonometric functions (sin, cos, tan), so this speeds up bootstraps and simulations. The conversion is straightforward: 
+The unit of time is the day, so values range from 0 to 1. Package \texttt{overlap} works entirely in \emph{radians}: fitting density curves uses trigonometric functions (sin, cos, tan), so this speeds up bootstraps and simulations. The conversion is straightforward:
 
 <<convertToRadians>>=
 timeRad <- kerinci$Time * 2 * pi
@@ -118,7 +118,7 @@ This works if we know the true density distributions, $f(x)$ and $g(x)$; but we 
 \subsection{Estimators}
 \label{subsec:estimators}
 
-Five general nonparametric estimators of the coefficient of overlapping were proposed by \citet{SchmidSchmidt2006}. For circular distributions, the first two are equivalent and the third is unworkable \citep{RidoutLinkie2009}. We retain $\hat{\Delta}_1$,  $\hat{\Delta}_4$ and $\hat{\Delta}_5$. 
+Five general nonparametric estimators of the coefficient of overlapping were proposed by \citet{SchmidSchmidt2006}. For circular distributions, the first two are equivalent and the third is unworkable \citep{RidoutLinkie2009}. We retain $\hat{\Delta}_1$,  $\hat{\Delta}_4$ and $\hat{\Delta}_5$.
 
 The first, $\hat{\Delta}_1$, matches the definition in equation \eqref{eq:definition}, but in practice it is estimated numerically, taking a large number of values, $t_1, t_2, ..., t_T$, equally spaced between 0 and $2\pi$ ($t_i = 2\pi i/T)$ and summing:
 
@@ -129,11 +129,11 @@ The first, $\hat{\Delta}_1$, matches the definition in equation \eqref{eq:defini
 For $\hat{\Delta}_4$ and $\hat{\Delta}_5$, we compare the densities at the observed values, $x_1,...,x_n$ for one species and $y_1, ...,y_m$ for the other:
 
 \begin{equation} \label{eq:Dhat4}
-  \hat{\Delta}_4 = \frac{1}{2} \left( \frac{1}{n} \sum_{i=1}^n \textrm{min} \left\{ 1, \frac{\hat{g}(x_i)}{\hat{f}(x_i)}\right\} + \frac{1}{m} \sum_{i=1}^m \textrm{min} \left\{ 1, \frac{\hat{f}(y_i)}{\hat{g}(y_i)}\right\} \right) 
+  \hat{\Delta}_4 = \frac{1}{2} \left( \frac{1}{n} \sum_{i=1}^n \textrm{min} \left\{ 1, \frac{\hat{g}(x_i)}{\hat{f}(x_i)}\right\} + \frac{1}{m} \sum_{i=1}^m \textrm{min} \left\{ 1, \frac{\hat{f}(y_i)}{\hat{g}(y_i)}\right\} \right)
 \end{equation}
 
 \begin{equation} \label{eq:Dhat5}
-  \hat{\Delta}_5 = \frac{1}{n} \sum_{i=1}^n I \left\{ \hat{f}(x_i) < \hat{g}(x_i)\right\} + \frac{1}{m} \sum_{i=1}^m I \left\{ \hat{g}(y_i) \leq \hat{f}(y_i)\right\} 
+  \hat{\Delta}_5 = \frac{1}{n} \sum_{i=1}^n I \left\{ \hat{f}(x_i) < \hat{g}(x_i)\right\} + \frac{1}{m} \sum_{i=1}^m I \left\{ \hat{g}(y_i) \leq \hat{f}(y_i)\right\}
 \end{equation}
 where $I(.)$ is 1 if the condition in the parenthesis is true, 0 otherwise.
 
@@ -142,7 +142,7 @@ The terms $\hat{f}(.)$ and $\hat{g}(.)$ refer to the fitted kernel density funct
 \subsection{Choice of estimator}
 \label{subsec:whichDhat}
 
-\citet{RidoutLinkie2009} carried out simulations with a variety of scenarios where the true overlap was known, and compared the resulting estimates with the truth, calculating the root mean squared error (RMSE) for each estimator. The present authors have carried out further simulations in the same manner. 
+\citet{RidoutLinkie2009} carried out simulations with a variety of scenarios where the true overlap was known, and compared the resulting estimates with the truth, calculating the root mean squared error (RMSE) for each estimator. The present authors have carried out further simulations in the same manner.
 
 We found that the best estimator depended on the size of the \emph{smaller} of the two samples: When the smaller sample was less than 50, $\hat{\Delta}_1$ performed best, while $\hat{\Delta}_4$ was better when it was greater than 75.
 
@@ -159,7 +159,7 @@ tig2 <- timeRad[kerinci$Zone == 2 & kerinci$Sps == 'tiger']
 mac2 <- timeRad[kerinci$Zone == 2 & kerinci$Sps == 'macaque']
 min(length(tig2), length(mac2))
 tigmac2est <- overlapEst(tig2, mac2, type="Dhat4")
-tigmac2est 
+tigmac2est
 overlapPlot(tig2, mac2, main="Zone 2")
 legend('topright', c("Tigers", "Macaques"), lty=c(1,2), col=c(1,4), bty='n')
 @
@@ -184,21 +184,10 @@ The usual bootstrap method treats the existing sample as representative of the p
 
 An alternative is a smoothed bootstrap. We begin by fitting a kernel density to the original data then draw random simulated observations from this distribution. Faced with original values between 20:58 and 03:14, most simulated observations would fall in the same range, but a few will fall outside.
 
- In the \texttt{overlap} package, we generate bootstrap samples with \texttt{resample}, which has a \texttt{smooth} argument; if \texttt{smooth = TRUE} (the default), smoothed bootstrap samples are generated. For this example, we will generate just 1000 smoothed bootstrap samples for tigers and macaques in Zone 2; for a real analysis 10,000 bootstrap samples would be better:
+ In the \texttt{overlap} package, we generate bootstrap samples with \texttt{bootstrap}, which has a \texttt{smooth} argument; if \texttt{smooth = TRUE} (the default), smoothed bootstrap samples are generated. For this example, we will generate just 1000 bootstrap estimates for tigers and macaques in Zone 2; for a real analysis 10,000 bootstrap samples would be better:
 
 <<bootstrap1>>==
-tig2boot <- resample(tig2, 1000)
-dim(tig2boot)
-mac2boot <- resample(mac2, 1000)
-dim(mac2boot)
-@
-
-This produces matrices with a column for each bootstrap sample. The bootstrap sample size is the same as the original sample size.
-
-Now we pass these two matrices to \texttt{bootEst} to generate estimates of overlap from each pair of samples. We select $\hat{\Delta}_4$:
-
-<<bootstrap2>>==
-tigmac2 <- bootEst(tig2boot, mac2boot, type="Dhat4")  # takes a few seconds
+tigmac2 <- bootstrap(tig2, mac2, 1000, type="Dhat4")  # takes a few seconds
 ( BSmean <- mean(tigmac2) )
 @
 
@@ -251,7 +240,7 @@ With small samples (smaller sample <~75) and $\Delta >~0.8$, coverage sometimes 
   \item Use a smoothed bootstrap and do at least 1000 resamples, preferably 10,000.
   \item Use the \texttt{basic0} output from \texttt{bootCI} as your confidence interval; be aware that this confidence interval will be too narrow if you have a small sample and $\Delta$ is close to 1.
 \end{itemize}
-	
+
 
 \section{Caveats}
 \label{sec:caveats}
@@ -259,7 +248,7 @@ With small samples (smaller sample <~75) and $\Delta >~0.8$, coverage sometimes 
 \subsection{Pooling data}
 \label{sec:pooling}
 
-Pooled data give higher estimates of overlap than the original, unpooled data \citep{RidoutLinkie2009}. Suppose we find a species of bat that emerges immediately after sunset and a hawk which goes to roost just before sunset: their activity patterns do not overlap and presumably the hawk will not be feeding on the bats. But the time of sunset changes; data from December only or from June only show no overlap, but the pooled data do, and this apparent overlap is an artefact of pooling. 
+Pooled data give higher estimates of overlap than the original, unpooled data \citep{RidoutLinkie2009}. Suppose we find a species of bat that emerges immediately after sunset and a hawk which goes to roost just before sunset: their activity patterns do not overlap and presumably the hawk will not be feeding on the bats. But the time of sunset changes; data from December only or from June only show no overlap, but the pooled data do, and this apparent overlap is an artefact of pooling.
 
 This is a clear-cut example. In general, differences in activity patterns across sites or time periods will be smaller, but any heterogeneity will inflate the overlap estimates from pooled data. Care is needed when comparing coefficients of overlap among study areas or periods of varying extent or degree of heterogeneity.
 

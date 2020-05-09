@@ -16,8 +16,6 @@ In particular, note that all times are measured in \bold{radians}. If your origi
 
 \author{
 Mike Meredith, based on work by Martin Ridout.
-
-Maintainer: Mike Meredith <mmeredith@wcs.org>
 }
 
 \seealso{
@@ -36,8 +34,8 @@ data(simulatedData)
 
 # Use defaults:
 overlapEst(tigerObs, pigObs)
-#     Dhat1     Dhat4     Dhat5 
-# 0.2908618 0.2692011 0.2275000  
+#     Dhat1     Dhat4     Dhat5
+# 0.2908618 0.2692011 0.2275000
 
 overlapEst(tigerObs, pigObs, type="Dhat4")
 # Dhat4

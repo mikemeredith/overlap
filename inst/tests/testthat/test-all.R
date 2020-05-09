@@ -91,7 +91,7 @@ test_that("bootstrap smooth=TRUE gives correct answer", {
   set.seed(123)
   boots <- bootstrap(tigerObs, pigObs, nb=99)
   expect_that(round(mean(boots), 6),
-    is_equivalent_to(0.357667))
+    is_equivalent_to(0.345504))
   # set.seed(123) # parallel not reproducible
   # bootpar <- bootstrap(tigerObs, pigObs, nb=99, cores=2)
   # expect_that(round(mean(bootpar), 6),
@@ -107,7 +107,7 @@ test_that("bootstrap smooth=FALSE gives correct answer", {
   set.seed(123)
   boots <- bootstrap(tigerObs, pigObs, nb=99, smooth=FALSE)
   expect_that(round(mean(boots), 6),
-    is_equivalent_to(0.297175))
+    is_equivalent_to(0.28488))
   # set.seed(123) # parallel not reproducible
   # bootpar <- bootstrap(tigerObs, pigObs, nb=99, cores=2)
   # expect_that(round(mean(bootpar), 6),
