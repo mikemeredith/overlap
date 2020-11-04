@@ -60,6 +60,7 @@ data(simulatedData)
 
 # Do basic plot with defaults:
 densityPlot(pigObs)
+
 # Prettier plots:
 densityPlot(pigObs, extend=NULL, lwd=2)
 densityPlot(pigObs, rug=TRUE, main="Simulated data", extend='gold')
@@ -80,9 +81,19 @@ densityPlot(pigObs, rug=TRUE, lwd=3)
 # Don't like the rug with lwd = 3?
 pigDens <- densityPlot(pigObs, rug=TRUE)
 lines(pigDens, lwd=3)
+
+# Add shading below the curve:
+pigDens <- densityPlot(pigObs, extend=NULL)
+polygon(pigDens, col='skyblue') # works if density at midnight = 0
+tigDens <- densityPlot(tigerObs, extend=NULL)
+# Add vertices at (0,0) and (24, 0)
+poly <- rbind(c(0,0), tigDens, c(24,0))
+polygon(poly, col='pink', border=NA)
+lines(tigDens, lwd=2)
+
 # What proportion of the density lies between 9:00 and 15:00 hrs?
 wanted <- pigDens$x > 9 & pigDens$x < 15
-mean(pigDens$y[wanted]) * 6  # probability mass for the 6 hr period. 
+mean(pigDens$y[wanted]) * 6  # probability mass for the 6 hr period.
 
 # Plotting time in radians:
 densityPlot(pigObs, xscale=NA, rug=TRUE)

@@ -1,4 +1,8 @@
 
+CHANGES IN VERSION 0.3.3.9000 (2020-11-04)
+
+  * Additions to 'densityPlot' examples.
+
 CHANGES IN VERSION 0.3.3 (2020-05-09)
 
   * Updated 'testthat' tests for new RNGkind.
