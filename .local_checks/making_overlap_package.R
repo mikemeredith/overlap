@@ -33,6 +33,8 @@ system(paste("R CMD check ", pkg, "--as-cran --no-manual --no-build-vignettes"))
 system(paste("R CMD INSTALL ", pkg))            # install only
 system(paste("R CMD INSTALL ", pkg, "--build")) # install and produce the .zip binary
 
+### for the NOTEs on o files and 'abort' calls see ###
+# https://stackoverflow.com/questions/64402688/information-on-o-files-for-x64-is-not-available-note-on-r-package-checks-using
 
 # Test it:
 library(overlap)
