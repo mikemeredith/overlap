@@ -1,3 +1,6 @@
+
+#### to compile the C code, do not use NppToR to open R ####
+
 setwd("C:/GitHub/overlap_package") # my laptop
 setwd("D:/GitHub/overlap_package") # my desktop
 
@@ -14,10 +17,10 @@ system("R CMD INSTALL overlap")
 # Create the overlap package
 # ==========================
 unlink(list.files(pattern="Rplots.pdf", recursive=TRUE))
-pkg <- "overlap_0.3.3.9000.tar.gz"  # <-- fix version number here ################
+pkg <- "overlap_0.3.3.9001.tar.gz"  # <-- fix version number here ################
 
 ## on desktop
-system("R CMD build overlap") 
+system("R CMD build overlap")
 system(paste("R CMD check ", pkg))
 system(paste("R CMD check ", pkg, "--as-cran"))  # as-cran now runs donttest
 
@@ -32,12 +35,14 @@ system(paste("R CMD INSTALL ", pkg, "--build")) # install and produce the .zip b
 
 
 # Test it:
+library(overlap)
 library(testthat)
 test_package("overlap")
 
 # Try it out:
 rm(list=ls())
 library(overlap)
+news(p='overlap')
 sessionInfo()  # Check versions
 ?overlap
 

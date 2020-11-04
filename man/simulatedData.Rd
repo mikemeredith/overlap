@@ -6,7 +6,7 @@
 \alias{pigTrue}
 \docType{data}
 \title{
-Simulated data for diurnal activity patterns
+Simulated data for diel activity patterns
 }
 \description{
 tigerObs and pigObs are simulated data sets with times of observation. tigerTrue and pigTrue are densities from which the simulated observations were drawn.
