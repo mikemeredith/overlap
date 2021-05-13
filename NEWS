@@ -1,13 +1,9 @@
 
-CHANGES IN VERSION 0.3.3.9002 (2021-05-13)
+CHANGES IN VERSION 0.3.4 (2021-05-13)
 
-  * Fixed vignette code for R-devel.
-
-CHANGES IN VERSION 0.3.3.9001 (2020-11-04)
+  * Fixed vignette compilation issue with R-devel.
 
   * Reformatted data sets as '.rda' files.
-
-CHANGES IN VERSION 0.3.3.9000 (2020-11-04)
 
   * Additions to 'densityPlot' examples.
 
