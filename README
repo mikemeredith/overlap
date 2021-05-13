@@ -1,4 +1,4 @@
 
-Code for an R package based on R programs for estimating overlap of activity patterns posted by Martin Ridout at \url{http://www.kent.ac.uk/smsas/personal/msr/overlap.html}, which also has links to papers describing the theoretical background.
+Code for an R package based on R programs for estimating overlap of activity patterns posted by Martin Ridout at \url{https://www.kent.ac.uk/smsas/personal/msr/overlap.html}, which also has links to papers describing the theoretical background.
 
 The routine for fitting circular kernel densities has been coded in C, so that bootstrap estimation of confidence intervals runs faster. New functions for parametric bootstrapping and for extracting confidence intervals have been added.
