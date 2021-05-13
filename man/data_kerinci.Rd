@@ -26,7 +26,7 @@ A data frame with 1098 rows and three columns:
 \source{
 Ridout, M.S. and Linkie, M. (2009) Estimating overlap of daily activity patterns from camera trap data. \emph{Journal of Agricultural, Biological and Environmental Statistics}, 14, 322-337.
 
-\url{http://www.kent.ac.uk/smsas/personal/msr/overlap.html}
+\url{https://www.kent.ac.uk/smsas/personal/msr/overlap.html}
 
 }
 
