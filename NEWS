@@ -1,7 +1,7 @@
 
 CHANGES IN VERSION 0.3.4 (2021-05-13)
 
-  * Fixed vignette compilation issue with R-devel.
+  * Fixed: rebuilding of vignette with R-devel (thanks to Kurt Hornik).
 
   * Reformatted data sets as '.rda' files.
 
