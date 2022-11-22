@@ -31,10 +31,10 @@ function(A, B, xscale=24, xcenter=c("noon", "midnight"),
 
   # Deal with ... argument:
   dots <- list(...)
-  if(length(dots) == 1 && class(dots[[1]]) == "list")
+  if(length(dots) == 1 && inherits(dots[[1]], "list"))
     dots <- dots[[1]]
   defaultArgs <- list(
-    main=paste(deparse(substitute(A)), "and", deparse(substitute(B))), 
+    main=paste(deparse(substitute(A)), "and", deparse(substitute(B))),
     xlab="Time", ylab="Density",
     bty="o", type="l", xlim=range(xx), ylim = c(0, max(densA, densB)))
   useArgs <- modifyList(defaultArgs, dots)

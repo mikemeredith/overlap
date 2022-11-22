@@ -1,12 +1,11 @@
 Package: overlap
 Type: Package
 Title: Estimates of Coefficient of Overlapping for Animal Activity Patterns
-Version: 0.3.4
-Date: 2021-05-13
+Version: 0.3.5
+Date: 2022-11-22
 Suggests: maptools, sp
 Author: Mike Meredith and Martin Ridout
-Maintainer:  Mike Meredith <mike@mmeredith.net>
-BugReports: https://github.com/mikemeredith/overlap/issues
+Maintainer: Liz Campbell <liz_campbell@biology.ox.ac.uk>
 Description: Provides functions to fit kernel density functions to
  data on temporal activity patterns of animals; estimate coefficients
  of overlapping of densities for two species; and calculate bootstrap

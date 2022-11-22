@@ -28,7 +28,7 @@ function(A, xscale=24, xcenter=c("noon", "midnight"),
 
   # Deal with ... argument:
   dots <- list(...)
-  if(length(dots) == 1 && class(dots[[1]]) == "list")
+  if(length(dots) == 1 && inherits(dots[[1]], "list"))
     dots <- dots[[1]]
   defaultArgs <- list(main=deparse(substitute(A)), bty="o", type="l",
     xlab="Time", ylab="Density", ylim = c(0, max(toPlot[,'y'])))

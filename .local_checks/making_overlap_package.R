@@ -17,7 +17,7 @@ system("R CMD INSTALL overlap")
 # Create the overlap package
 # ==========================
 unlink(list.files(pattern="Rplots.pdf", recursive=TRUE))
-pkg <- "overlap_0.3.4.tar.gz"  # <-- fix version number here ################
+pkg <- "overlap_0.3.5.tar.gz"  # <-- fix version number here ################
 
 ## on desktop
 system("R CMD build overlap")
@@ -54,3 +54,4 @@ sessionInfo()  # Check versions
 example("densityPlot")
 example("overlapPlot")
 
+?overlap

@@ -6,7 +6,7 @@
 plotTimeAxis <- function(xscale, ...) {
   # Deal with ... argument:
   dots <- list(...)
-  if(length(dots) == 1 && class(dots[[1]]) == "list")
+  if(length(dots) == 1 && inherits(dots[[1]], "list"))
     dots <- dots[[1]]
   selPlot <- names(dots) %in%
      c("cex.axis", "col.axis", "family", "font.axis", "las", "tck", "tcl", "xaxt",

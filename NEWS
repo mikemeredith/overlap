@@ -1,4 +1,10 @@
 
+CHANGES IN VERSION 0.3.5 (2022-11-22)
+
+  * Fixed: if() conditions comparing class() to string.
+
+  * New maintainer, Liz Campbell.
+
 CHANGES IN VERSION 0.3.4 (2021-05-13)
 
   * Fixed: rebuilding of vignette with R-devel (thanks to Kurt Hornik).
